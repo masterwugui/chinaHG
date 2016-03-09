@@ -187,13 +187,6 @@
 			<artifactId>jstl</artifactId>
 			<version>${servlet.jstl.version}</version>
 		</dependency>
-
-		<dependency>
-			<groupId>com.sybase</groupId>
-			<artifactId>sybase-driver</artifactId>
-			<version>12</version>
-		</dependency>
-		
 		 <!-- mysql -->  
         <dependency>  
             <groupId>mysql</groupId>  
