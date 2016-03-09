@@ -1,0 +1,180 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>     
+<!DOCTYPE log4j:configuration SYSTEM "log4j.dtd">
+<!-- =============================================== -->
+<!-- log4j日志配置文件(请使用专用编辑器查看) -->
+<!-- =============================================== -->
+<!-- 说明： 1、系统中所有日志均依据本配置文件进行记录； 2、系统中所有日志均需记录在${web.caseflowmanagement.root}/WEB-INF/logs/目录下； 
+	3、系统中各个模块、各个服务日志记录在${web.caseflowmanagement.root}/WEB-INF/logs/default/目录下； 
+	4、系统中各个模块、各个服务日志记录为运行时日志runtime.log、错误日志error.log； 运行时日志是运行阶段的日志记录（默认为warn、error、fatal）， 
+	错误日志是系统运行时错误日志（error、fatal）。 5、所有日志可以设定为monthly(每月)、weekly(每周)、daily(每天)、half-daily(每半天)、hourly(每小时)和minutely(每分钟)六个频度 
+	目前默认频度为每天 6、所有配置均禁止使用绝对路径。 日志配置说明： 1、系统默认日志DefaultRuntimeAppender 2、系统默认运行错误日志ErrorAppender 
+	3、系统默认日志记录器nju.software 4、Spring运行时日志SpringRuntimeAppender 5、Spring日志记录器org.springframework 
+	6、Hibernate运行时日志HibernateRuntimeAppender 7、Hibernate日志记录器org.hibernate 8、Xfire运行时日志XfireRuntimeAppender 
+	9、Xfire日志记录器org.codehaus.xfire 10、apache运行时日志ApacheRuntimeAppender 11、apache日志记录器org.apache 
+	%m 输出代码中指定的消息 %p 输出优先级，即DEBUG，INFO，WARN，ERROR，FATAL %r 输出自应用启动到输出该log信息耗费的毫秒数 
+	%c 输出所属的类目，通常就是所在类的全名 %t 输出产生该日志事件的线程名 %n 输出一个回车换行符，Windows平台为“\r\n”，Unix平台为“\n” 
+	%d 输出日志时间点的日期或时间，默认格式为ISO8601，也可以在其后指定格式，比如：%d{yyy MMM dd HH:mm:ss , SSS}，输出类似：2002年10月18日 
+	22 ： 10 ： 28 ， 921 %l 输出日志事件的发生位置，包括类目名、发生的线程，以及在代码中的行数。举例：Testlog4.main(TestLog4.java: 
+	10 ) -->
+<log4j:configuration xmlns:log4j='http://jakarta.apache.org/log4j/'>
+
+	<!-- 0、输出到控制台中 -->
+	<appender name="console" class="org.apache.log4j.ConsoleAppender">
+		<layout class="org.apache.log4j.PatternLayout">   								<!-- 设置日志的记录格式 -->
+			<param name="ConversionPattern"  value="[%d{dd HH:mm:ss,SSS\} %-5p] [%t] %c{2\} - %m%n" />   
+		</layout>
+		<!--过滤器设置输出的级别 -->
+		<filter class="org.apache.log4j.varia.LevelRangeFilter">   						<!--过滤器设置输出的级别 -->
+			<param name="levelMin" value="info" />     									<!--过滤器设置输出的最低级别为info -->
+			<param name="levelMax" value="fatal" />     								<!--过滤器设置输出的最高级别为fatal -->
+			<param name="AcceptOnMatch" value="true" />
+		</filter>
+	</appender>
+
+	<!-- =================================================================== -->
+	<!-- 系统默认的Logger及Appender -->
+
+	<!-- 1、系统运行时日志DefaultRuntimeAppender 记录各个模块、服务的runtime日志 系统运行时信息将记录在${web.caseflowmanagement.root}/WEB-INF/logs/default/runtime/runtime.log -->
+	<appender name="DefaultRuntimeAppender" class="org.apache.log4j.DailyRollingFileAppender">
+		<param name="File" value="C:/rizhi/runtime.log" />	<!-- 设置日志输出文件名 -->
+		<param name="Append" value="true" />      										<!-- 设置是否在重新启动服务时，在原有日志的基础添加新日志 -->
+		<param name="DatePattern" value="'.'yyyy-MM-dd'.log'" />
+		<layout class="org.apache.log4j.PatternLayout">   								<!-- 设置日志的记录格式 -->
+			<param name="ConversionPattern" value="[%d{yyy MMM dd HH:mm:ss,SSS\} %-5p] %l - %m%n" />
+		</layout>
+		<filter class="org.apache.log4j.varia.LevelRangeFilter">   						<!--过滤器设置输出的级别 -->
+			<param name="levelMin" value="warn" />     									<!--过滤器设置输出的最低级别为info -->
+			<param name="levelMax" value="fatal" />     								<!--过滤器设置输出的最高级别为fatal -->
+			<param name="AcceptOnMatch" value="true" />
+		</filter>
+	</appender>
+
+	<!-- 2、系统运行错误日志ErrorAppender 记录各个模块、服务的error日志 系统错误将记录在${web.caseflowmanagement.root}/WEB-INF/logs/default/error/error.log -->
+	<appender name="ErrorAppender" class="org.apache.log4j.DailyRollingFileAppender">
+		<param name="File" value="C:/rizhi/error.log" />	<!-- 设置日志输出文件名 -->
+		<param name="Append" value="true" />      										<!-- 设置是否在重新启动服务时，在原有日志的基础添加新日志 -->
+		<param name="DatePattern" value="'.'yyyy-MM-dd'.log'" />
+		<layout class="org.apache.log4j.PatternLayout">   								<!-- 设置日志的记录格式 -->
+			<param name="ConversionPattern" value="[%d{yyy MMM dd HH:mm:ss,SSS\} %-5p] %l - %m%n" />
+		</layout>
+		<filter class="org.apache.log4j.varia.LevelRangeFilter">   						<!--过滤器设置输出的级别 -->
+			<param name="levelMin" value="error" />     								<!--过滤器设置输出的最低级别为error -->
+			<param name="levelMax" value="fatal" />     								<!--过滤器设置输出的最高级别为fatal -->
+			<param name="AcceptOnMatch" value="true" />
+		</filter>
+	</appender>
+
+	<!-- 3、系统默认日志记录器nju.software 日志记录在${web.caseflowmanagement.root}/WEB-INF/logs/default/目录下 -->
+	<logger name="nju.software" additivity="false">     								<!--是否继承父logger的Appender，统一为false -->
+		<appender-ref ref="console" />
+		<appender-ref ref="DefaultRuntimeAppender" />
+		<appender-ref ref="ErrorAppender" />
+	</logger>
+	<!-- =================================================================== -->
+
+	<!-- =================================================================== -->
+	<!-- Spring的Logger及Appender -->
+
+	<!-- 4、Spring运行时日志SpringRuntimeAppender 记录Spring的runtime日志 系统运行时信息将记录在${web.caseflowmanagement.root}/WEB-INF/logs/Thirdpart/spring/runtime/runtime.log -->
+	<appender name="SpringRuntimeAppender" class="org.apache.log4j.DailyRollingFileAppender">
+		<param name="File" value="C:/rizhi/Thirdpart/spring/runtime/runtime.log" />	<!-- 设置日志输出文件名 -->
+		<param name="Append" value="true" />      										<!-- 设置是否在重新启动服务时，在原有日志的基础添加新日志 -->
+		<param name="DatePattern" value="'.'yyyy-MM-dd'.log'" />
+		<layout class="org.apache.log4j.PatternLayout">   								<!-- 设置日志的记录格式 -->
+			<param name="ConversionPattern" value="[%d{yyy MMM dd HH:mm:ss,SSS\} %-5p] %l - %m%n" />
+		</layout>
+		<filter class="org.apache.log4j.varia.LevelRangeFilter">   						<!--过滤器设置输出的级别 -->
+			<param name="levelMin" value="debug" />     								<!--过滤器设置输出的最低级别为info -->
+			<param name="levelMax" value="fatal" />     								<!--过滤器设置输出的最高级别为fatal -->
+			<param name="AcceptOnMatch" value="true" />
+		</filter>
+	</appender>
+
+
+	<!-- 5、Spring日志记录器org.springframework 日志记录在${web.caseflowmanagement.root}/WEB-INF/logs/Thirdpart/spring/目录下 -->
+	<logger name="org.springframework" additivity="false">     								<!--是否继承父logger的Appender，统一为false -->
+		<appender-ref ref="SpringRuntimeAppender" />
+		<appender-ref ref="ErrorAppender" />
+	</logger>
+
+	<!-- =================================================================== -->
+	<!-- hibernate的Logger及Appender -->
+
+	<!-- 6、Hibernate运行时日志HibernateRuntimeAppender 记录Hibernate的runtime日志 系统运行时信息将记录在${web.caseflowmanagement.root}/WEB-INF/logs/Thirdpart/Hibernate/runtime/runtime.log -->
+	<appender name="HibernateRuntimeAppender" class="org.apache.log4j.DailyRollingFileAppender">
+		<param name="File" value="C:/rizhi/Hibernate/runtime/runtime.log" />	<!-- 设置日志输出文件名 -->
+		<param name="Append" value="true" />      										<!-- 设置是否在重新启动服务时，在原有日志的基础添加新日志 -->
+		<param name="DatePattern" value="'.'yyyy-MM-dd'.log'" />
+		<layout class="org.apache.log4j.PatternLayout">   								<!-- 设置日志的记录格式 -->
+			<param name="ConversionPattern" value="[%d{yyy MMM dd HH:mm:ss,SSS\} %-5p] %l - %m%n" />
+		</layout>
+		<filter class="org.apache.log4j.varia.LevelRangeFilter">   						<!--过滤器设置输出的级别 -->
+			<param name="levelMin" value="info" />     									<!--过滤器设置输出的最低级别为info -->
+			<param name="levelMax" value="fatal" />     								<!--过滤器设置输出的最高级别为fatal -->
+			<param name="AcceptOnMatch" value="true" />
+		</filter>
+	</appender>
+
+	<!-- 7、Hibernate日志记录器org.hibernate 日志记录在${web.caseflowmanagement.root}/WEB-INF/logs/Thirdpart/Hibernate/目录下 -->
+	<logger name="org.hibernate" additivity="false">     								<!--是否继承父logger的Appender，统一为false -->
+		<appender-ref ref="HibernateRuntimeAppender" />
+		<appender-ref ref="ErrorAppender" />
+	</logger>
+
+	<!-- =================================================================== -->
+	<!-- Xfire的Logger及Appender -->
+
+	<!-- 8、Xfire运行时日志XfireRuntimeAppender 记录Xfire的runtime日志 系统运行时信息将记录在${web.caseflowmanagement.root}/WEB-INF/logs/Thirdpart/Xfire/runtime/runtime.log -->
+	<appender name="XfireRuntimeAppender" class="org.apache.log4j.DailyRollingFileAppender">
+		<param name="File" value="C:/rizhi/Thirdpart/Xfire/runtime/runtime.log" />	<!-- 设置日志输出文件名 -->
+		<param name="Append" value="true" />      										<!-- 设置是否在重新启动服务时，在原有日志的基础添加新日志 -->
+		<param name="DatePattern" value="'.'yyyy-MM-dd'.log'" />
+		<layout class="org.apache.log4j.PatternLayout">   								<!-- 设置日志的记录格式 -->
+			<param name="ConversionPattern" value="[%d{yyy MMM dd HH:mm:ss,SSS\} %-5p] %l - %m%n" />
+		</layout>
+		<filter class="org.apache.log4j.varia.LevelRangeFilter">   						<!--过滤器设置输出的级别 -->
+			<param name="levelMin" value="info" />     									<!--过滤器设置输出的最低级别为info -->
+			<param name="levelMax" value="fatal" />     								<!--过滤器设置输出的最高级别为fatal -->
+			<param name="AcceptOnMatch" value="true" />
+		</filter>
+	</appender>
+
+	<!-- 9、Xfire日志记录器org.codehaus.xfire 日志记录在${web.caseflowmanagement.root}/WEB-INF/logs/Thirdpart/Xfire/目录下 -->
+	<logger name="org.codehaus.xfire" additivity="false">     								<!--是否继承父logger的Appender，统一为false -->
+		<appender-ref ref="XfireRuntimeAppender" />
+		<appender-ref ref="ErrorAppender" />
+	</logger>
+
+	<!-- =================================================================== -->
+	<!-- Xfire的Logger及Appender -->
+
+	<!-- 10、apache运行时日志XfireRuntimeAppender 记录apache的runtime日志 系统运行时信息将记录在${web.caseflowmanagement.root}/WEB-INF/logs/Thirdpart/apache/runtime/runtime.log -->
+	<appender name="ApacheRuntimeAppender" class="org.apache.log4j.DailyRollingFileAppender">
+		<param name="File" value="C:/rizhi/Thirdpart/apache/runtime/runtime.log" />	<!-- 设置日志输出文件名 -->
+		<param name="Append" value="true" />      										<!-- 设置是否在重新启动服务时，在原有日志的基础添加新日志 -->
+		<param name="DatePattern" value="'.'yyyy-MM-dd'.log'" />
+		<layout class="org.apache.log4j.PatternLayout">   								<!-- 设置日志的记录格式 -->
+			<param name="ConversionPattern" value="[%d{yyy MMM dd HH:mm:ss,SSS\} %-5p] %l - %m%n" />
+		</layout>
+		<filter class="org.apache.log4j.varia.LevelRangeFilter">   						<!--过滤器设置输出的级别 -->
+			<param name="levelMin" value="info" />     									<!--过滤器设置输出的最低级别为info -->
+			<param name="levelMax" value="fatal" />     								<!--过滤器设置输出的最高级别为fatal -->
+			<param name="AcceptOnMatch" value="true" />
+		</filter>
+	</appender>
+
+	<!-- 11、apache日志记录器org.apache 日志记录在${web.caseflowmanagement.root}/WEB-INF/logs/Thirdpart/apache/目录下 -->
+	<logger name="org.apache" additivity="false">     								<!--是否继承父logger的Appender，统一为false -->
+		<appender-ref ref="ApacheRuntimeAppender" />
+		<appender-ref ref="ErrorAppender" />
+	</logger>
+	<!-- =================================================================== -->
+	<!-- =================================================================== -->
+	<root>
+		<priority value="info" />
+		<appender-ref ref="console" />
+		<appender-ref ref="DefaultRuntimeAppender" />
+		<appender-ref ref="ErrorAppender" />
+	</root>
+
+</log4j:configuration>

@@ -1,0 +1,165 @@
+/* ie.css */
+html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, b, u, i, center, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td, article, aside, canvas, details, embed, figure, figcaption, footer, header, hgroup, menu, nav, output, ruby, section, summary, time, mark, audio, video {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    font-size: 14px;
+    font-family: 'Microsoft Yahei',微软雅黑,'Helvetica Neue', Helvetica, STheiti, 宋体, Arial, Tahoma, sans-serif, serif;
+    vertical-align: baseline;
+}
+@font-face{
+	font-family:'Microsoft Yahei',微软雅黑 ;
+	src: url(msyh.eot);	
+}
+/*common*/
+li{list-style:none;}
+a{text-decoration:none;}
+table{border-collapse:collapse;border-spacing:0;}
+th{font-weight:normal;text-align: justify;
+	text-justify:distribute-all-lines; /*ie6-8*/
+	text-align-last:justify;/*ie9*/
+}
+
+.welcome{
+	height: 38px;
+	width: 100%;
+	background-color: #f5f5f5;
+}
+.fymc_wrapper{
+	display: inline-block;
+	background: url(../img/star.png) 4px 10px no-repeat; 
+	height: 36px;
+	margin: 3px 0 0 40px;
+}
+.fy_logo{
+	width: 43px;
+	height: 48px;
+	display: inline-block;
+	background: url(../img/fy_logo2.png) 0 0 no-repeat;
+	margin: 20px 0 0 40px;
+}
+.line{
+	height: 7px;
+	background: url(../img/line_bg.png) 0 0 repeat-x;
+}
+.user_wrapper{
+	display: inline-block;
+	background: url(../img/people.png) 3px 10px no-repeat; 
+	height: 36px;
+	margin: 3px 0 0 30px;
+}
+.header{
+	height: 90px;
+	background: url(../img/dzda_title.png) 100px 20px no-repeat;
+}
+.fymc, .user{
+	display: inline-block;
+	margin: 10px 0 0 20px;
+	/* font-weight: bold; */
+	color: rgb(94, 94, 94);
+}
+.body_wrapper{
+	width: 1000px;
+	/*height: 1200px;*/
+	background: url(../img/main_bg.png) 0 0 no-repeat;
+	margin: 0 auto;
+}
+.btn{
+	width: 81px;
+	height:40px;
+	margin-top: 20px;
+	display: inline-block;
+	padding: 6px 12px;
+	font-family: 'Helvetica Neue', Helvetica, STheiti, 'Microsoft Yahei', 宋体, Arial, Tahoma, sans-serif, serif;
+	/*border: 0;
+	background: url(../img/btn_bg.png) 0 0 no-repeat; */
+	cursor: pointer;
+	background-color: rgb(66, 139, 202);
+	border-color: rgb(53, 126, 189);
+	border: solid 1px;
+	color:white;
+	font-size:14px;
+}
+.btn:HOVER{
+	color: #ffffff;
+	background-color: #3276b1;
+	border-color: #285e8e;
+}
+.btn_small{
+	margin-left: 5px;
+	width:43px;
+	height:20px;
+	background:url(../img/btn_small.png) 0 0 no-repeat;
+	border:0;
+	cursor: pointer;
+}
+.btn_small_a{
+	width:96px;
+	height:20px;
+	cursor:pointer;
+	text-align:center;
+	display:inline-block;
+	border:0;
+	background: url(../img/btn_small_a_bg.png) 0 0 no-repeat;
+}
+.info_table{
+	margin: 10px auto;
+}
+.info_wrapper{
+	margin: 0 auto;
+	margin-top:5px;
+}
+.table_title{
+	font-weight:bold;
+	padding-left:10px;
+}
+.detail_span{
+	display: inline-table;
+}
+.center{
+	text-align: center;
+}
+.popup_div{
+	position:fixed;
+	width:100%;
+	height:100%;
+	background:url(../img/popup_bg.png) 0 0 repeat;
+	top:0;
+	z-index:3;
+	display:none;
+}
+.pcsq_pop{
+	position:fixed;
+	width:100%;
+	height:100%;
+	background:url(../img/popup_bg.png) 0 0 repeat;
+	top:0;
+	z-index:2;
+	display:none;
+}
+/*wait dialog css*/
+.J_WAIT{
+	background:url("../img/process.gif") center center no-repeat;
+	height:100px;
+	margin-top:26px;
+}
+.waittext{
+	font-size:14px;
+	text-align:center;
+}
+.wait_wrapper{
+	margin:0 auto;
+	margin-top:200px;
+	background-color: white;
+	width: 135px;
+	height: 120px;
+}
+.link_wrapper{
+	display:inline-block;
+	float:right;
+	margin-right:30px;
+}
+.logout_a{
+	margin-top:10px;
+	display:inline-block;
+}

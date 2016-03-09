@@ -1,0 +1,129 @@
+#uploader{
+	width: 420px;
+	height: 600px;
+	margin: 0 auto;
+}
+.plupload_header_title{
+	padding-top: 15px;
+	color: #0071a0;
+	font-weight: bold;
+}
+.content_wrapper{
+	width:985px;
+	display: inline-block;
+	background-color: white;
+	margin-left: 7.5px;
+}
+.upload_wrapper{
+	float: left;
+}
+.btn_wrapper{
+	width: 100px;
+	float: left;
+	margin-left: 35px;
+	margin-top: 50px;
+}
+.index_wrapper{
+	width: 420px;
+	height: 555px;	
+	overflow-y:auto; 
+	float: right;
+	border-bottom: 1px solid #83c9e6;
+	border-left: 1px solid #83c9e6;
+	border-right: 1px solid #83c9e6;
+}
+.btn{
+	width: 81px;
+	height:43px;
+	margin-top: 20px;
+	border: 0;
+	background: url(../img/btn_bg.png) 0 0 no-repeat;
+}
+#index_header{
+	height:45px;
+	width:420px;
+	float: right;
+	position: relative;
+	border-top: 1px solid #83c9e6;
+	border-left: 1px solid #83c9e6;
+	border-right: 1px solid #83c9e6;
+	border-bottom: 1px solid #d3d3d3;
+	/*background: #e6e6e6 url(images/ui-bg_glass_75_e6e6e6_1x400.png) 50% 50% repeat-x;*/
+	background: white url(../img/group_header_bg.png) 50% 100% repeat-x;
+}
+#tree1{
+	margin-left: 10px;
+	height: 543px;
+}
+#tree1 li{
+	margin-top: 10px;
+}
+.logo{
+	width: 40px;
+	height: 40px;
+	background: url('../img/index.png') no-repeat 0 0;
+	position: absolute;
+	top: 8px;
+	left: 8px;
+}
+.header_title{
+	font: normal 18px sans-serif;
+	color: #0071a0;
+	padding: 15px 160px 0 60px;
+	font-weight: bold;
+}
+/*plupload中对于已经添加过的图片添加*/
+.line_added{
+	display: none;
+}
+.body_wrapper{
+	width: 1000px;
+	height: 1200px;
+	background: url(../img/main_bg.png) 0 0 no-repeat;
+	margin: 0 auto;
+}
+.welcome{
+	height: 38px;
+	width: 100%;
+	background-color: #f5f5f5;
+}
+.fymc_wrapper{
+	display: inline-block;
+	background: url(../img/house.png) 0 0 no-repeat;
+	height: 36px;
+	margin: 3px 0 0 40px;
+}
+.fymc, .user{
+	display: inline-block;
+	margin: 10px 0 0 40px;
+	font-weight: bold;
+}
+.user_wrapper{
+	display: inline-block;
+	background: url(../img/people.png) 0 0 no-repeat;
+	height: 36px;
+	margin: 3px 0 0 30px;
+}
+.header{
+	height: 177px;
+	background: url(../img/dzda_title.png) 80px 20px no-repeat;
+}
+.fy_logo{
+	width: 33px;
+	height: 37px;
+	display: inline-block;
+	background: url(../img/fy_logo.png) 0 0 no-repeat;
+	margin: 15px 0 0 40px;
+}
+.line{
+	height: 7px;
+	background: url(../img/line_bg.png) 0 0 repeat-x;
+}
+.info_table{
+	margin: 0 auto;
+	width: 700px;
+	height: 50px;
+}
+.info_wrapper{
+	margin: 0 auto;
+}

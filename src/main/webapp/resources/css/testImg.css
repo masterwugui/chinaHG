@@ -1,0 +1,10 @@
+.img_wrapper{
+	width: 400px;
+	height: 400px;
+	overflow: auto;
+}
+#myImg{
+	width: 200px;
+	height: 200px;
+	border: 0;
+}

@@ -1,0 +1,80 @@
+.body_wrapper{
+	height: 610px;
+}
+.fy_logo {
+	margin:45px 0 0 35px;
+}
+.header{
+	background: url(../img/dzda_title_jy2.png) 90px 50px no-repeat;
+	height: 175px;
+}
+.login_wrapper{
+	text-align: center;
+}
+.form_wrapper{
+	margin: 30px 0;
+	display: inline-block;
+	width: 305px;
+	height: 294px;
+	background: url(../img/login_wrapper_bg.png) 0 0 no-repeat;
+	text-align: center;
+}
+.login_form div{
+	margin-top: 30px;
+	display: inline-block;
+	width: 242px;
+	height: 36px;
+}
+div.username_wrapper{
+	margin-top:50px;
+	background: url(../img/user_wrapper_bg.png) 0 0 no-repeat;
+}
+.pass_wrapper{
+	background: url(../img/pass_wrapper_bg.png) 0 0 no-repeat;
+}
+.role_wrapper{
+	background: url(../img/role_wrapper_bg.png) 0 0 no-repeat;
+}
+.login_form div span{
+	display: inline-block;
+	width: 17px;
+	height: 13px;
+	float: left;
+	margin:12px 0 0 5px;
+}
+.user_logo{
+	background: url(../img/login_user_logo.png) 50% 0 no-repeat;
+}
+.pass_logo{
+	background: url(../img/login_pass_logo.png) 50% 0 no-repeat;
+}
+.role_logo{
+	background: url(../img/login_role_logo.png) 50% 0 no-repeat;
+}
+div.login_btn_wrapper{
+	width: 244px;
+}
+div.login_btn_wrapper input{
+	background: url(../img/login_btn_bg.png) 0 0 no-repeat;
+	width: 100%;
+	height: 100%;
+	border: 0;
+	cursor: pointer;
+	margin: 0;
+	color: black;
+	font-size: 14px;
+    font-family: 'Helvetica Neue', Helvetica, STheiti, 'Microsoft Yahei', 宋体, Arial, Tahoma, sans-serif, serif;
+}
+.login_form input,select{
+	float: left;
+	margin: 5px 0 0 2px;
+	width: 210px;
+	height: 20px;
+	line-height: 20px;
+	border: 1px solid transparent;
+	background: 0;
+	color: #525252;
+}
+div.role_wrapper select{
+	margin: 8px 0 0 0;
+}
