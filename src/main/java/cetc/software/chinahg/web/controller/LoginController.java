@@ -24,6 +24,7 @@ public class LoginController implements Serializable {
 	/**
 	 * 
 	 */
+	
 	private static final long serialVersionUID = 5934993450538015681L;
 	/**
 	 *  

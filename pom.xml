@@ -187,6 +187,7 @@
 			<artifactId>jstl</artifactId>
 			<version>${servlet.jstl.version}</version>
 		</dependency>
+		
 		 <!-- mysql -->  
         <dependency>  
             <groupId>mysql</groupId>  
