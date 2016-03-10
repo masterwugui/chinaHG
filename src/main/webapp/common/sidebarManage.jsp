@@ -16,12 +16,8 @@
 							<img src="assets/img/flags/china.png" class="img-flags" alt="" />
 						</div>
 					</div>
-					<li class="active"><a href="toHome.do"> <i
+					<li class="active"><a href="toManageHome.do"> <i
 							class="fa fa-laptop" aria-hidden="true"></i><span>首页</span>
-					</a></li>
-					<li><a href="toWork.do"> <span
-							class="pull-right label label-danger">2</span> <i
-							class="fa fa-envelope" aria-hidden="true"></i><span>作业情况</span>
 					</a></li>
 					<li><a href="toSettings.do"> <i class="fa fa-cog"
 							aria-hidden="true"></i><span>参数维护</span>

@@ -1,17 +1,12 @@
 package cetc.software.chinahg.web.service.implement;
 
-import java.util.List;
-
 import javax.annotation.Resource;
 
 import org.springframework.stereotype.Component;
 
 import cetc.software.chinahg.data.dao.XtglyhbDao;
 import cetc.software.chinahg.data.dataobject.PubXtglYhb;
-import cetc.software.chinahg.dynamicds.DataSourceEnum;
-import cetc.software.chinahg.dynamicds.DataSourceRouter;
 import cetc.software.chinahg.web.service.XtglyhbService;
-
 
 @Component("xtglyhbService")
 public class XtglyhbServiceImpl implements XtglyhbService {
@@ -28,14 +23,23 @@ public class XtglyhbServiceImpl implements XtglyhbService {
 
 	@Override
 	public PubXtglYhb getXtglyhbByYhdmYhkl(String yhdm, String yhkl) {
-		DataSourceRouter.routerTo(DataSourceEnum.DEFAULT.getFydm());
-		PubXtglYhb pubXtglYhb  = xtglyhbDao.getXtglyhbByYhdmYhkl(yhdm, yhkl);
+		PubXtglYhb pubXtglYhb = xtglyhbDao.getXtglyhbByYhdmYhkl(yhdm, yhkl);
 		return pubXtglYhb;
 	}
 
 	@Override
-	public List<PubXtglYhb> getUserByFydm(String fydm) {
-		return xtglyhbDao.getUserByFydm(fydm);
+	public boolean insertNewHgUser(String yhdm, String yhkl, String yhmc,
+			Integer permission, String yh_duty, String yh_jobNum,
+			String yh_lineNum, String yh_phoneNum, String yh_email,
+			String yh_address) {
+		return xtglyhbDao.insertNewHgUser(yhdm, yhkl, yhmc, permission,
+				yh_duty, yh_jobNum, yh_lineNum, yh_phoneNum, yh_email,
+				yh_address);
+	}
+
+	@Override
+	public boolean deleteXtglyhb(Integer yhbh) {
+		return xtglyhbDao.deleteXtglyhb(yhbh);
 	}
 
 }

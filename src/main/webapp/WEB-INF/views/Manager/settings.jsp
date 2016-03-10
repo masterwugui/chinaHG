@@ -144,7 +144,7 @@
 		<div class="row">
 
 			<!-- Sidebar -->
-			<jsp:include page="/common/sidebar.jsp"></jsp:include>
+			<jsp:include page="/common/sidebarManage.jsp"></jsp:include>
 			<!-- End Sidebar -->
 
 			<!-- Main Page -->

@@ -8,15 +8,29 @@ import org.springframework.stereotype.Component;
 
 import cetc.software.chinahg.data.dao.XtglyhbDao;
 import cetc.software.chinahg.data.dataobject.PubXtglYhb;
+import cetc.software.ksxt.web.service.model.zghgUserModel;
 
 @Component("xtglyhbDao")
 public class XtglyhbDaoHibernate extends BaseHibernateDAO implements XtglyhbDao {
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public PubXtglYhb getXtglyhbByYhdmYhkl(String yhdm, String yhkl) {
-		// String hql = "from PubXtglYhb where YHDM=? and YHKL=?";
+	public boolean isXtglyhbExistsByYhdm(String yhdm) {
+		String sql = "SELECT * FROM pub_xtglyhb WHERE yhdm = ?";
+		Query query = getMySession().createSQLQuery(sql).addEntity(
+				PubXtglYhb.class);
+		query.setString(0, yhdm);
 
+		List<PubXtglYhb> xtglyhbList = query.list();
+		if (xtglyhbList == null) {
+			xtglyhbList = new ArrayList<PubXtglYhb>();
+		}
+		return xtglyhbList.isEmpty() ? false : true;
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public PubXtglYhb getXtglyhbByYhdmYhkl(String yhdm, String yhkl) {
 		String sql = "SELECT * FROM pub_xtglyhb WHERE yhdm = ? AND yhkl = ?";
 		Query query = getMySession().createSQLQuery(sql).addEntity(
 				PubXtglYhb.class);
@@ -31,110 +45,56 @@ public class XtglyhbDaoHibernate extends BaseHibernateDAO implements XtglyhbDao 
 	}
 
 	@Override
-	public boolean updatePermission(int id, String permission) {
-		String sql = "UPDATE RMPSY_MANAGER SET permission = ? where yhbh = ?";
-		Query query = getMySession().createSQLQuery(sql).addEntity(
-				PubXtglYhb.class);
-		query.setString(0, permission);
-		query.setInteger(1, id);
-
-		int result = query.executeUpdate();
-		if (result == 1)
-			return true;
-		return false;
-	}
-
-	@Override
-	public String getPermission(int id) {
-		String sql = "SELECT permission FROM RMPSY_MANAGER WHERE YHBH = ?";
+	public boolean insertNewHgUser(String yhdm, String yhkl, String yhmc,
+			Integer permission, String yh_duty, String yh_jobNum,
+			String yh_lineNum, String yh_phoneNum, String yh_email,
+			String yh_address) {
+		String sql = "insert into pub_xtglyhb(yhdm, yhmc, yhkl, permission, yh_duty, yh_jobNum, yh_lineNum, yh_phoneNum, yh_email, yh_address) values(?,?,?,?,?,?,?,?,?,?)";
 		Query query = getMySession().createSQLQuery(sql);
-		query.setInteger(0, id);
-
-		@SuppressWarnings("unchecked")
-		List<String> list = query.list();
-		if (list != null && list.size() > 0)
-			return list.get(0);
-
-		return null;
-	}
-
-	@Override
-	public List<PubXtglYhb> getUserByFydm(String fydm) {
-		String sql = "SELECT * FROM RMPSY_MANAGER WHERE FYDM = ?";
-		Query query = getMySession().createSQLQuery(sql).addEntity(
-				PubXtglYhb.class);
-		query.setString(0, fydm);
-		@SuppressWarnings("unchecked")
-		List<PubXtglYhb> xtglyhbList = query.list();
-		return xtglyhbList == null ? new ArrayList<PubXtglYhb>() : xtglyhbList;
-	}
-
-	@Override
-	public boolean insertUser(String yhdm, String yhmc, String yhkl,
-			String fydm, String permission) {
-		String sql = "insert into RMPSY_MANAGER (YHDM, YHMC, YHKL, FYDM, permission) values (?,?,?,?,?)";
-		Query query = getMySession().createSQLQuery(sql);
-		query.setString(0, yhdm);
-		query.setString(1, yhmc);
-		query.setString(2, yhkl);
-		query.setString(3, fydm);
-		query.setString(4, permission);
-
-		int result = query.executeUpdate();
-		if (result == 1)
-			return true;
-		return false;
-	}
-
-	@Override
-	public List<PubXtglYhb> getRealUser() {
-		String sql = "SELECT * FROM RMPSY_MANAGER WHERE permission like '_______________1%'";
-		Query query = getMySession().createSQLQuery(sql).addEntity(
-				PubXtglYhb.class);
-		@SuppressWarnings("unchecked")
-		List<PubXtglYhb> xtglyhbList = query.list();
-		return xtglyhbList == null ? new ArrayList<PubXtglYhb>() : xtglyhbList;
-	}
-
-	@Override
-	public PubXtglYhb getXtglyhbByYhdmFydm(String yhdm, String fydm) {
-		String sql = "SELECT * FROM RMPSY_MANAGER WHERE YHDM = ? and FYDM = ?";
-		Query query = getMySession().createSQLQuery(sql).addEntity(
-				PubXtglYhb.class);
-		query.setString(0, yhdm);
-		query.setString(1, fydm);
-
-		@SuppressWarnings("unchecked")
-		List<PubXtglYhb> xtglyhbList = query.list();
-		if (xtglyhbList == null) {
-			xtglyhbList = new ArrayList<PubXtglYhb>();
-		}
-		return xtglyhbList.isEmpty() ? (null) : xtglyhbList.get(0);
-	}
-
-	@Override
-	public List<PubXtglYhb> getAllUser() {
-		String sql = "SELECT * FROM RMPSY_MANAGER";
-		Query query = getMySession().createSQLQuery(sql).addEntity(
-				PubXtglYhb.class);
-		@SuppressWarnings("unchecked")
-		List<PubXtglYhb> xtglyhbList = query.list();
-		return xtglyhbList == null ? new ArrayList<PubXtglYhb>() : xtglyhbList;
-	}
-
-	@SuppressWarnings("unchecked")
-	@Override
-	public PubXtglYhb getXtglyhbByYhdmYhklFydm(String yhdm, String yhkl,
-			String fydm) {
-		String sql = "SELECT * FROM pub_xtglyhb WHERE YHDM = ? AND YHKL = ? AND FYDM=?";
-		Query query = getMySession().createSQLQuery(sql).addEntity(
-				PubXtglYhb.class);
 		query.setString(0, yhdm);
 		query.setString(1, yhkl);
-		query.setString(2, fydm);
-		List<PubXtglYhb> xtglyhbList = new ArrayList<PubXtglYhb>();
-		xtglyhbList =query.list();
-		return xtglyhbList.isEmpty() ? (null) : xtglyhbList.get(0);
+		query.setString(2, yhmc);
+		query.setInteger(3, permission);
+		query.setString(4, yh_duty);
+		query.setString(5, yh_jobNum);
+		query.setString(6, yh_lineNum);
+		query.setString(7, yh_phoneNum);
+		query.setString(8, yh_email);
+		query.setString(9, yh_address);
+		return query.executeUpdate() == 1;
+	}
+
+	@Override
+	public boolean deleteXtglyhb(Integer yhbh) {
+		String sql = "delete from pub_xtglyhb where yhbh = ?";
+		Query query = getMySession().createSQLQuery(sql);
+		query.setInteger(0, yhbh);
+		return query.executeUpdate() == 1;
+	}
+
+	@Override
+	public List<zghgUserModel> getUserList() {
+		String sql ="select yhbh, yhdm, yhmc, yhkl, permission, yh_duty, yh_jobNum, yh_lineNum, yh_phoneNum, yh_email, yh_address from pub_xtglyhb where permission <> 3";
+		Query query = getMySession().createSQLQuery(sql);
+		@SuppressWarnings("unchecked")
+		List<Object[]> reList = query.list();
+		List<zghgUserModel> modelList = new ArrayList<zghgUserModel>();
+		for(Object[] oa: reList){
+			zghgUserModel model = new zghgUserModel();
+			model.setYhbh((Integer) oa[0]);
+			model.setYhdm((String) oa[1]);
+			model.setYhmc((String) oa[2]);
+			model.setYhkl((String) oa[3]);
+			model.setPermission((Integer) oa[4]);
+			model.setYh_duty((String) oa[5]);
+			model.setYh_jobNum((String) oa[6]);
+			model.setYh_lineNum((String) oa[7]);
+			model.setYh_phoneNum((String) oa[8]);
+			model.setYh_email((String) oa[9]);
+			model.setYh_address((String) oa[10]);
+			modelList.add(model);
+		}
+		return modelList;
 	}
 
 }
