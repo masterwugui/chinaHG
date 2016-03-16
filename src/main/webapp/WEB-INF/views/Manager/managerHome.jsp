@@ -204,7 +204,7 @@
 							<div class="panel-body">
 								<table
 									class="table table-bordered table-striped datatable-default"
-									id="datatable-default">
+									id="sample_editable_1">
 									<thead>
 										<tr>
 											<th>场地类别</th>
@@ -286,39 +286,6 @@
 	<div id="footer">
 		<ul>
 			<li>
-				<div class="title">Memory</div>
-				<div class="bar">
-					<div class="progress light progress-sm  progress-striped active">
-						<div class="progress-bar progress-squared progress-bar-success"
-							role="progressbar" aria-valuenow="60" aria-valuemin="0"
-							aria-valuemax="100" style="width: 60%;">60%</div>
-					</div>
-				</div>
-				<div class="desc">4GB of 8GB</div>
-			</li>
-			<li>
-				<div class="title">HDD</div>
-				<div class="bar">
-					<div class="progress light progress-sm  progress-striped active">
-						<div class="progress-bar progress-squared progress-bar-primary"
-							role="progressbar" aria-valuenow="40" aria-valuemin="0"
-							aria-valuemax="100" style="width: 40%;">40%</div>
-					</div>
-				</div>
-				<div class="desc">250GB of 1TB</div>
-			</li>
-			<li>
-				<div class="title">SSD</div>
-				<div class="bar">
-					<div class="progress light progress-sm  progress-striped active">
-						<div class="progress-bar progress-squared progress-bar-warning"
-							role="progressbar" aria-valuenow="70" aria-valuemin="0"
-							aria-valuemax="100" style="width: 70%;">70%</div>
-					</div>
-				</div>
-				<div class="desc">700GB of 1TB</div>
-			</li>
-			<li>
 				<div class="copyright">
 					<p class="text-muted text-right">
 						Fire <i class="fa fa-coffee"></i>
@@ -329,8 +296,6 @@
 	</div>
 	<!-- End Footer -->
 
-	</div>
-	</div>
 	<!--/container-->
 
 
@@ -379,10 +344,15 @@
 
 	<!-- Pages JS -->
 	<script src="assets/js/pages/index.js"></script>
+	<!-- <script src="assets/js/pages/table-advanced.js"></script> -->
 	<script src="assets/js/pages/table-advanced.js"></script>
 	<script src="assets/js/pages/ui-modals.js"></script>
 	<!-- end: JavaScript-->
-
+	<script>
+	jQuery(document).ready(function() {
+			TableEditable.init();
+		});
+	</script>
 </body>
 
 </html>

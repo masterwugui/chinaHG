@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=utf-8"
 	pageEncoding="utf-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html lang="zh">
 
@@ -58,9 +59,43 @@
 </head>
 
 <body>
+	<!-- Modal addUser -->
+	<div id="modalAnim"
+		class="zoom-anim-dialog modal-block modal-block-primary mfp-hide">
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				<h2 class="panel-title">增加用户</h2>
+			</div>
+			<div class="panel-body bk-noradius">
+				<div class="form-group mt-lg">
+					<label class="col-sm-3 control-label">用户名</label>
+					<div class="col-sm-9">
+						<input type="text" id="userName" class="form-control"
+							placeholder="输入用户的姓名..." required />
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-sm-3 control-label">用户密码</label>
+					<div class="col-sm-9">
+						<input class="form-control input-sm valid" id="userPwd" required
+							type="password">
+					</div>
+				</div>
+			</div>
+			<div class="panel-footer">
+				<div class="row">
+					<div class="col-md-12 text-right">
+						<button class="btn btn-primary modal-confirm" onclick='addYh()'>确定</button>
+						<button class="btn btn-default modal-dismiss">取消</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- Model addUser End -->
 
 	<!-- Modal Animation -->
-	<div id="modalAnim"
+	<div id="userInfo"
 		class="zoom-anim-dialog modal-block modal-block-primary mfp-hide">
 		<div class="panel panel-default">
 			<div class="panel-heading">
@@ -202,28 +237,28 @@
 									</div>
 								</div>
 								<table class="table table-bordered table-striped mb-none"
-									id="datatable-editable">
+									id="sample_editable_1">
 									<thead>
 										<tr>
-											<th>用户姓名</th>
+											<th>用户名</th>
+											<th>姓名</th>
 											<th>职务</th>
 											<th>工号</th>
-											<th>操作</th>
+											<th>编辑</th>
+											<th>删除</th>
 										</tr>
 									</thead>
 									<tbody>
-										<tr class="gradeX">
-											<td>Magento</td>
-											<td>Internet Explorer 4.0</td>
-											<td>Win 95+</td>
-											<td class="actions"><a href="#"
-												class="hidden on-editing save-row"><i class="fa fa-save"></i></a>
-												<a href="#" class="hidden on-editing cancel-row"><i
-													class="fa fa-times"></i></a> <a href="#"
-												class="on-default edit-row"><i class="fa fa-pencil"></i></a>
-												<a href="#" class="on-default remove-row"><i
-													class="fa fa-trash-o"></i></a></td>
-										</tr>
+										<c:forEach items="${userList}" var="user">
+											<tr>
+												<td>${user.yhdm}</td>
+												<td>${user.yhmc}</td>
+												<td>${user.yh_duty}</td>
+												<td>${user.yh_jobNum}</td>
+												<td><a class="edit" href="javascript:;">编辑</a></td>
+												<td><a class="delete" href="javascript:;">删除</a></td>
+											</tr>
+										</c:forEach>
 									</tbody>
 								</table>
 							</div>
@@ -286,8 +321,44 @@
 
 	<!-- Pages JS -->
 	<script src="assets/js/pages/mailbox.js"></script>
-	<script src="assets/js/pages/table-editable.js"></script>
+	<script src="assets/js/pages/table-advanced.js"></script>
 	<script src="assets/js/pages/ui-modals.js"></script>
+
+	<script>
+		var oTable = $('#sample_editable_1').dataTable();
+		$('#sample_editable_1 a.delete').live('click', function(e) {
+			e.preventDefault();
+			 if (confirm("确定要删除此用户？") == false) {
+                 return;
+             }
+			var nRow = $(this).parents('tr')[0];
+			oTable.fnDeleteRow(nRow);
+		});
+		function addYh() {
+			var yhdm = $('#userName').val();
+			var yhkl = $('#userPwd').val();
+			$.ajax({
+				url : "addYh.json",//
+				contentType : "application/json",//application/xml  
+				processData : true,//contentType为xml时，些值为false  
+				data : {
+					yhdm : yhdm,
+					yhkl : yhkl
+				},
+				dataType : "json",//json--返回json数据类型；xml--返回xml  
+				success : function(msg) {
+					$('#modalAnim #yhdm').val("");
+					$('#modalAnim #yhkl').val("");
+					$('#modalAnim').modal('hide');
+					oTable.fnAddData([ '', '', '', '',
+							'<a class="edit" href="javascript:;">编辑</a>','<a class="delete" href="javascript:;">删除</a>' ]);
+				},
+				error : function(jqXHR, textStatus, errorThrown) {
+
+				},
+			});
+		}
+	</script>
 	<!-- end: JavaScript-->
 
 </body>

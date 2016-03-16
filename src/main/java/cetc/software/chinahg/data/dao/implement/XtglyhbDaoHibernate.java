@@ -85,7 +85,7 @@ public class XtglyhbDaoHibernate extends BaseHibernateDAO implements XtglyhbDao 
 			model.setYhdm((String) oa[1]);
 			model.setYhmc((String) oa[2]);
 			model.setYhkl((String) oa[3]);
-			model.setPermission((Integer) oa[4]);
+			model.setPermission((String) oa[4]);
 			model.setYh_duty((String) oa[5]);
 			model.setYh_jobNum((String) oa[6]);
 			model.setYh_lineNum((String) oa[7]);
@@ -95,6 +95,15 @@ public class XtglyhbDaoHibernate extends BaseHibernateDAO implements XtglyhbDao 
 			modelList.add(model);
 		}
 		return modelList;
+	}
+
+	@Override
+	public boolean insertNewHgUser(String yhdm, String yhkl) {
+		String sql = "insert into pub_xtglyhb(yhdm, yhkl, permission) values(?,?,'2')";
+		Query query = getMySession().createSQLQuery(sql);
+		query.setString(0, yhdm);
+		query.setString(1, yhkl);
+		return query.executeUpdate() == 1;
 	}
 
 }

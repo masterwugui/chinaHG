@@ -2,6 +2,7 @@ package cetc.software.chinahg.web.controller;
 
 import java.io.IOException;
 import java.io.Serializable;
+import java.util.List;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -16,6 +17,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import cetc.software.chinahg.data.dataobject.PubXtglYhb;
 import cetc.software.chinahg.web.service.XtglyhbService;
+import cetc.software.ksxt.web.service.model.zghgUserModel;
 
 @Controller
 public class LoginController implements Serializable {
@@ -64,6 +66,8 @@ public class LoginController implements Serializable {
 	public ModelAndView toSettings(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
 		ModelAndView mav = new ModelAndView("Manager/settings");
+		List<zghgUserModel> userList = xtglyhbService.getUserList();
+		mav.addObject("userList",userList);
 		return mav;
 	}
 	

@@ -5,7 +5,7 @@ public class zghgUserModel {
 	String yhdm;
 	String yhkl;
 	String yhmc;
-	Integer permission;
+	String permission;
 	String yh_duty;
 	String yh_jobNum;
 	String yh_lineNum;
@@ -36,10 +36,10 @@ public class zghgUserModel {
 	public void setYhmc(String yhmc) {
 		this.yhmc = yhmc;
 	}
-	public Integer getPermission() {
+	public String getPermission() {
 		return permission;
 	}
-	public void setPermission(Integer permission) {
+	public void setPermission(String permission) {
 		this.permission = permission;
 	}
 	public String getYh_duty() {

@@ -1,5 +1,7 @@
 package cetc.software.chinahg.web.service.implement;
 
+import java.util.List;
+
 import javax.annotation.Resource;
 
 import org.springframework.stereotype.Component;
@@ -7,6 +9,7 @@ import org.springframework.stereotype.Component;
 import cetc.software.chinahg.data.dao.XtglyhbDao;
 import cetc.software.chinahg.data.dataobject.PubXtglYhb;
 import cetc.software.chinahg.web.service.XtglyhbService;
+import cetc.software.ksxt.web.service.model.zghgUserModel;
 
 @Component("xtglyhbService")
 public class XtglyhbServiceImpl implements XtglyhbService {
@@ -40,6 +43,16 @@ public class XtglyhbServiceImpl implements XtglyhbService {
 	@Override
 	public boolean deleteXtglyhb(Integer yhbh) {
 		return xtglyhbDao.deleteXtglyhb(yhbh);
+	}
+
+	@Override
+	public List<zghgUserModel> getUserList() {
+		return xtglyhbDao.getUserList();
+	}
+
+	@Override
+	public boolean insertNewHgUser(String yhdm, String yhkl) {
+		return xtglyhbDao.insertNewHgUser(yhdm, yhkl);
 	}
 
 }
