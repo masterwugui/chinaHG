@@ -74,12 +74,12 @@ public class XtglyhbDaoHibernate extends BaseHibernateDAO implements XtglyhbDao 
 
 	@Override
 	public List<zghgUserModel> getUserList() {
-		String sql ="select yhbh, yhdm, yhmc, yhkl, permission, yh_duty, yh_jobNum, yh_lineNum, yh_phoneNum, yh_email, yh_address from pub_xtglyhb where permission <> 3";
+		String sql = "select yhbh, yhdm, yhmc, yhkl, permission, yh_duty, yh_jobNum, yh_lineNum, yh_phoneNum, yh_email, yh_address from pub_xtglyhb where permission <> 3";
 		Query query = getMySession().createSQLQuery(sql);
 		@SuppressWarnings("unchecked")
 		List<Object[]> reList = query.list();
 		List<zghgUserModel> modelList = new ArrayList<zghgUserModel>();
-		for(Object[] oa: reList){
+		for (Object[] oa : reList) {
 			zghgUserModel model = new zghgUserModel();
 			model.setYhbh((Integer) oa[0]);
 			model.setYhdm((String) oa[1]);
@@ -104,6 +104,36 @@ public class XtglyhbDaoHibernate extends BaseHibernateDAO implements XtglyhbDao 
 		query.setString(0, yhdm);
 		query.setString(1, yhkl);
 		return query.executeUpdate() == 1;
+	}
+
+	@Override
+	public List<Integer> getUserToBeChooseList() {
+		String sql = "select yhbh from pub_xtglyhb where permission = 2";
+		Query query = getMySession().createSQLQuery(sql);
+		@SuppressWarnings("unchecked")
+		List<Integer> reList = query.list();
+		return reList;
+	}
+
+	@Override
+	public zghgUserModel getUser(int yhbh) {
+		String sql = "select yhbh, yhdm, yhmc, yhkl, permission, yh_duty, yh_jobNum, yh_lineNum, yh_phoneNum, yh_email, yh_address from pub_xtglyhb where yhbh = ?";
+		Query query = getMySession().createSQLQuery(sql);
+		query.setInteger(0, yhbh);
+		Object[] oa = (Object[]) query.list().get(0);
+		zghgUserModel model = new zghgUserModel();
+		model.setYhbh((Integer) oa[0]);
+		model.setYhdm((String) oa[1]);
+		model.setYhmc((String) oa[2]);
+		model.setYhkl((String) oa[3]);
+		model.setPermission((String) oa[4]);
+		model.setYh_duty((String) oa[5]);
+		model.setYh_jobNum((String) oa[6]);
+		model.setYh_lineNum((String) oa[7]);
+		model.setYh_phoneNum((String) oa[8]);
+		model.setYh_email((String) oa[9]);
+		model.setYh_address((String) oa[10]);
+		return model;
 	}
 
 }

@@ -350,7 +350,7 @@
 					$('#modalAnim #yhdm').val("");
 					$('#modalAnim #yhkl').val("");
 					$('#modalAnim').modal('hide');
-					oTable.fnAddData([ '', '', '', '',
+					oTable.fnAddData([ yhdm, '', '', '',
 							'<a class="edit" href="javascript:;">编辑</a>','<a class="delete" href="javascript:;">删除</a>' ]);
 				},
 				error : function(jqXHR, textStatus, errorThrown) {

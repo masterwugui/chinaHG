@@ -55,7 +55,19 @@ public class DateFormatUtil {
 		}
 		return time;
 	}
-
+	
+	public static String getFormatTimeStringChn(Date date) {
+		String time;
+		if (date != null) {
+			String path = "yyyy年MM月dd日 HH时mm分ss秒";
+			SimpleDateFormat format = new SimpleDateFormat(path);
+			time = format.format(date);
+		} else {
+			time = "0000-00-00 00:00:00";
+		}
+		return time;
+	}
+	
 	public static String getDateStringBeforeSixDay() {
 		Calendar cal = Calendar.getInstance();
 		cal.add(Calendar.DATE, -6);

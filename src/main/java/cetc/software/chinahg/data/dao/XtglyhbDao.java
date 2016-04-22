@@ -14,11 +14,15 @@ public interface XtglyhbDao {
 			Integer permission, String yh_duty, String yh_jobNum,
 			String yh_lineNum, String yh_phoneNum, String yh_email,
 			String yh_address);
-	
+
 	boolean insertNewHgUser(String yhdm, String yhkl);
 
 	boolean deleteXtglyhb(Integer yhbh);
 
 	List<zghgUserModel> getUserList();
+
+	zghgUserModel getUser(int yhbh);
+
+	List<Integer> getUserToBeChooseList();
 
 }

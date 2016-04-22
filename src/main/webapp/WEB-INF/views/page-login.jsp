@@ -145,6 +145,8 @@ footer {
 				success : function(msg) {
 					if (msg.permission == "1") {
 						window.location.href = 'toManageHome.do';
+					}else if(msg.permission == "2"){
+						window.location.href = 'toWork.do';
 					}
 				},
 				error : function(jqXHR, textStatus, errorThrown) {

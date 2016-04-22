@@ -77,7 +77,7 @@
 							<li><a href="#"><i class="fa fa-wrench"></i> 作业情况</a></li>
 							<li><a href="page-invoice"><i class="fa fa-usd"></i>
 									个人设置</a></li>
-							<li><a href="page-login.html"><i class="fa fa-power-off"></i>
+							<li><a href="index.do"><i class="fa fa-power-off"></i>
 									登出</a></li>
 						</ul>
 					</div>

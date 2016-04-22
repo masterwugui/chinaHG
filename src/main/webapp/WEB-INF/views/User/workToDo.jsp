@@ -1,4 +1,5 @@
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html lang="zh">
 
@@ -102,8 +103,9 @@
 			<div class="panel-footer">
 				<div class="row">
 					<div class="col-md-12 text-right">
-						<button class="btn btn-primary modal-confirm">确定</button>
-						<button class="btn btn-default modal-dismiss">取消</button>
+						<button id='modal_btn_ok' class="btn btn-primary modal-confirm"
+							data-dismiss="modal">确定</button>
+						<button class="btn btn-default modal-dismiss" data-dismiss="modal">取消</button>
 					</div>
 				</div>
 			</div>
@@ -336,58 +338,31 @@
 												<div class="panel-body">
 													<table
 														class="table table-bordered table-striped datatable-default"
-														id="datatable-default">
+														id="datatable-overview">
 														<thead>
 															<tr>
 																<th>场地类别</th>
 																<th>业务类别</th>
 																<th>检查要求</th>
+																<th class='hidden'></th>
+																<th class='hidden'></th>
+																<th class='hidden'></th>
 																<th>操作</th>
 															</tr>
 														</thead>
 														<tbody>
-															<tr class="gradeX">
-																<td>场地类别A</td>
-																<td>业务类别C</td>
-																<td>检查要求A</td>
-																<td><a class='modal-with-zoom-anim'
-																	href='#modalAnim'>确认作业</a></td>
-															</tr>
-															<tr class="gradeC">
-																<td>场地类别B</td>
-																<td>业务类别A</td>
-																<td>检查要求C</td>
-																<td><a class='modal-with-zoom-anim'
-																	href='#modalAnim'>确认作业</a></td>
-															</tr>
-															<tr class="gradeA">
-																<td>场地类别C</td>
-																<td>业务类别B</td>
-																<td>检查要求B</td>
-																<td><a class='modal-with-zoom-anim'
-																	href='#modalAnim'>确认作业</a></td>
-															</tr>
-															<tr class="gradeA">
-																<td>场地类别A</td>
-																<td>业务类别C</td>
-																<td>检查要求C</td>
-																<td><a class='modal-with-zoom-anim'
-																	href='#modalAnim'>确认作业</a></td>
-															</tr>
-															<tr class="gradeA">
-																<td>场地类别B</td>
-																<td>业务类别C</td>
-																<td>检查要求A</td>
-																<td><a class='modal-with-zoom-anim'
-																	href='#modalAnim'>确认作业</a></td>
-															</tr>
-															<tr class="gradeA">
-																<td>场地类别C</td>
-																<td>业务类别A</td>
-																<td>检查要求C</td>
-																<td><a class='modal-with-zoom-anim'
-																	href='#modalAnim'>确认作业</a></td>
-															</tr>
+															<c:forEach items="${modelNotStartedList}" var="model">
+																<tr>
+																	<td>${model.cdChn}</td>
+																	<td>${model.ywlbChn}</td>
+																	<td>${model.jcyqChn}</td>
+																	<td class='hidden'>${model.checkId}</td>
+																	<td class='hidden'>${model.scr_name}</td>
+																	<td class='hidden'>${model.scsj}</td>
+																	<td><a class="confirmWork modal-with-zoom-anim"
+																		href="javascript:;">确认作业</a></td>
+																</tr>
+															</c:forEach>
 														</tbody>
 													</table>
 												</div>
@@ -409,58 +384,29 @@
 												<div class="panel-body">
 													<table
 														class="table table-bordered table-striped datatable-default"
-														id="datatable-default">
+														id="datatable-edit">
 														<thead>
 															<tr>
+																<th>派单编号</th>
 																<th>场地类别</th>
 																<th>业务类别</th>
 																<th>检查要求</th>
+																<th>确认时间</th>
 																<th>操作</th>
 															</tr>
 														</thead>
 														<tbody>
-															<tr class="gradeX">
-																<td>场地类别A</td>
-																<td>业务类别C</td>
-																<td>检查要求A</td>
-																<td><a class='modal-with-zoom-anim'
-																	href='#modalAnim'>更改状态</a></td>
-															</tr>
-															<tr class="gradeC">
-																<td>场地类别B</td>
-																<td>业务类别A</td>
-																<td>检查要求C</td>
-																<td><a class='modal-with-zoom-anim'
-																	href='#modalAnim'>更改状态</a></td>
-															</tr>
-															<tr class="gradeA">
-																<td>场地类别C</td>
-																<td>业务类别B</td>
-																<td>检查要求B</td>
-																<td><a class='modal-with-zoom-anim'
-																	href='#modalAnim'>更改状态</a></td>
-															</tr>
-															<tr class="gradeA">
-																<td>场地类别A</td>
-																<td>业务类别C</td>
-																<td>检查要求C</td>
-																<td><a class='modal-with-zoom-anim'
-																	href='#modalAnim'>更改状态</a></td>
-															</tr>
-															<tr class="gradeA">
-																<td>场地类别B</td>
-																<td>业务类别C</td>
-																<td>检查要求A</td>
-																<td><a class='modal-with-zoom-anim'
-																	href='#modalAnim'>更改状态</a></td>
-															</tr>
-															<tr class="gradeA">
-																<td>场地类别C</td>
-																<td>业务类别A</td>
-																<td>检查要求C</td>
-																<td><a class='modal-with-zoom-anim'
-																	href='#modalAnim'>更改状态</a></td>
-															</tr>
+															<c:forEach items="${modelConfirmedList}" var="model">
+																<tr>
+																	<td>${model.checkId}</td>
+																	<td>${model.cdChn}</td>
+																	<td>${model.ywlbChn}</td>
+																	<td>${model.jcyqChn}</td>
+																	<td>${model.zxr_qrsj}</td>
+																	<td><a class="finishWork modal-with-zoom-anim"
+																		href="javascript:;">完成作业</a></td>
+																</tr>
+															</c:forEach>
 														</tbody>
 													</table>
 												</div>
@@ -482,58 +428,31 @@
 												<div class="panel-body">
 													<table
 														class="table table-bordered table-striped datatable-default"
-														id="datatable-default">
+														id="datatable-finish">
 														<thead>
 															<tr>
+																<th>派单编号</th>
 																<th>场地类别</th>
 																<th>业务类别</th>
 																<th>检查要求</th>
+																<th>确认时间</th>
+																<th>完成时间</th>
 																<th>操作</th>
 															</tr>
 														</thead>
 														<tbody>
-															<tr class="gradeX">
-																<td>场地类别A</td>
-																<td>业务类别C</td>
-																<td>检查要求A</td>
-																<td><a class='modal-with-zoom-anim'
-																	href='#modalAnim'>查看</a></td>
-															</tr>
-															<tr class="gradeC">
-																<td>场地类别B</td>
-																<td>业务类别A</td>
-																<td>检查要求C</td>
-																<td><a class='modal-with-zoom-anim'
-																	href='#modalAnim'>查看</a></td>
-															</tr>
-															<tr class="gradeA">
-																<td>场地类别C</td>
-																<td>业务类别B</td>
-																<td>检查要求B</td>
-																<td><a class='modal-with-zoom-anim'
-																	href='#modalAnim'>查看</a></td>
-															</tr>
-															<tr class="gradeA">
-																<td>场地类别A</td>
-																<td>业务类别C</td>
-																<td>检查要求C</td>
-																<td><a class='modal-with-zoom-anim'
-																	href='#modalAnim'>查看</a></td>
-															</tr>
-															<tr class="gradeA">
-																<td>场地类别B</td>
-																<td>业务类别C</td>
-																<td>检查要求A</td>
-																<td><a class='modal-with-zoom-anim'
-																	href='#modalAnim'>查看</a></td>
-															</tr>
-															<tr class="gradeA">
-																<td>场地类别C</td>
-																<td>业务类别A</td>
-																<td>检查要求C</td>
-																<td><a class='modal-with-zoom-anim'
-																	href='#modalAnim'>查看</a></td>
-															</tr>
+															<c:forEach items="${modelFinishedList}" var="model">
+																<tr>
+																	<td>${model.checkId}</td>
+																	<td>${model.cdChn}</td>
+																	<td>${model.ywlbChn}</td>
+																	<td>${model.jcyqChn}</td>
+																	<td>${model.zxr_qrsj}</td>
+																	<td>${model.zxr_wcsj}</td>
+																	<td><a class='checkWork modal-with-zoom-anim'
+																		href='javascript:;'>查看</a></td>
+																</tr>
+															</c:forEach>
 														</tbody>
 													</table>
 												</div>
@@ -603,10 +522,219 @@
 	<!-- Pages JS -->
 	<script src="assets/js/pages/index.js"></script>
 	<script src="assets/js/pages/table-advanced.js"></script>
-	<script src="assets/js/pages/ui-modals.js"></script>
+	<!-- <script src="assets/js/pages/ui-modals.js"></script> -->
 	<script src="assets/js/main.js"></script>
 	<!-- end: JavaScript-->
+	<script>
+		var tableOverView = $('#datatable-overview').dataTable();
+		var tableEdit = $('#datatable-edit').dataTable();
+		var tableFinish = $('#datatable-finish').dataTable();
+		var nRow = null;
+		var checkId;
+		var status;
+		//完成派单
+		$('#datatable-edit a.finishWork')
+				.live(
+						'click',
+						function(e) {
+							e.preventDefault();
 
+							nRow = $(this).parents('tr')[0];
+							checkId = nRow.cells[0].innerHTML;
+							status = 1;
+							$
+									.ajax({
+										url : "getUserCheckInfo.json",
+										contentType : "application/json",// application/xml
+										processData : true,// contentType为xml时，些值为false
+										data : {
+											checkId : checkId,
+										},
+										dataType : "json",// json--返回json数据类型；xml--返回xml
+										success : function(msg) {
+											var item = "<li><div class='timeline-box'><p class='text-muted'>"
+													+ msg.checkModel.scsj
+													+ "</p><p>由 "
+													+ msg.checkModel.scr_name
+													+ " 随机抽取派单</p></div></li>";
+											var confirmItem = "<li><div class='timeline-box'><p class='text-muted'>"
+													+ msg.checkModel.zxr_qrsj
+													+ "</p><p>确认派单 开始作业</p></div></li>";
+											$('#modalAnim ol.timeline-items')
+													.empty();
+											$('#modalAnim ol.timeline-items')
+													.append(item);
+											$('#modalAnim ol.timeline-items')
+													.append(confirmItem);
+										},
+										error : function(jqXHR, textStatus,
+												errorThrown) {
+										},
+									});
+						});
+		//查看派单
+		$('#datatable-finish a.checkWork')
+				.live(
+						'click',
+						function(e) {
+							e.preventDefault();
+							status = 2;
+							nRow = $(this).parents('tr')[0];
+							checkId = nRow.cells[0].innerHTML;
+							$
+									.ajax({
+										url : "getUserCheckInfo.json",
+										contentType : "application/json",// application/xml
+										processData : true,// contentType为xml时，些值为false
+										data : {
+											checkId : checkId,
+										},
+										dataType : "json",// json--返回json数据类型；xml--返回xml
+										success : function(msg) {
+											var item = "<li><div class='timeline-box'><p class='text-muted'>"
+													+ msg.checkModel.scsj
+													+ "</p><p>由 "
+													+ msg.checkModel.scr_name
+													+ " 随机抽取派单</p></div></li>";
+											var confirmItem = "<li><div class='timeline-box'><p class='text-muted'>"
+													+ msg.checkModel.zxr_qrsj
+													+ "</p><p>确认派单 开始作业</p></div></li>";
+											var finishItem = "<li><div class='timeline-box'><p class='text-muted'>"
+													+ msg.checkModel.zxr_wcsj
+													+ "</p><p>完成作业</p></div></li>";
+											$('#modalAnim ol.timeline-items')
+													.empty();
+											$('#modalAnim ol.timeline-items')
+													.append(item);
+											$('#modalAnim ol.timeline-items')
+													.append(confirmItem);
+											$('#modalAnim ol.timeline-items')
+											.append(finishItem);
+										},
+										error : function(jqXHR, textStatus,
+												errorThrown) {
+										},
+									});
+						});
+		//确认派单
+		$('#datatable-overview a.confirmWork')
+				.live(
+						'click',
+						function(e) {
+							e.preventDefault();
+							status = 0;
+							nRow = $(this).parents('tr')[0];
+							var scr_name = nRow.cells[4].innerHTML;
+							checkId = nRow.cells[3].innerHTML;
+							var scsj = nRow.cells[5].innerHTML;
+							status = 0;
+							var item = "<li><div class='timeline-box'><p class='text-muted'>"
+									+ scsj
+									+ "</p><p>由 "
+									+ scr_name
+									+ " 随机抽取派单</p></div></li>";
+							$('#modalAnim ol.timeline-items').empty();
+							$('#modalAnim ol.timeline-items').append(item);
+							/*$('#modalAnim').modal({
+								backdrop : 'static',
+								keyboard : false
+							});*/
+
+						});
+		$('.modal-with-zoom-anim').magnificPopup({
+			items : {
+				src : '#modalAnim',
+				type : 'inline',
+			},
+			fixedContentPos : false,
+			fixedBgPos : true,
+
+			overflowY : 'auto',
+
+			closeBtnInside : true,
+			preloader : false,
+
+			midClick : true,
+			removalDelay : 300,
+			mainClass : 'my-mfp-zoom-in',
+			modal : true
+		});
+		/*
+		Modal Dismiss
+		 */
+		$(document).on('click', '.modal-dismiss', function(e) {
+			e.preventDefault();
+			$.magnificPopup.close();
+		});
+
+		/*
+		Modal Confirm
+		 */
+		$(document)
+				.on(
+						'click',
+						'.modal-confirm',
+						function(e) {
+							e.preventDefault();
+							$
+									.ajax({
+										url : "confirmCheck.json",
+										contentType : "application/json",// application/xml
+										processData : true,// contentType为xml时，些值为false
+										data : {
+											checkId : checkId,
+											status : status
+										},
+										dataType : "json",// json--返回json数据类型；xml--返回xml
+										success : function(msg) {
+											if (status == 0) {
+												tableOverView.fnDeleteRow(nRow);
+												tableEdit
+														.fnAddData([
+																msg.checkModel.checkId,
+																msg.checkModel.cdChn,
+																msg.checkModel.ywlbChn,
+																msg.checkModel.jcyqChn,
+																msg.checkModel.zxr_qrsj,
+																"<td><a class='finishWork  modal-with-zoom-anim' href='javascript:;'>完成作业</a></td>" ]);
+											} else if (status == 1) {
+												tableEdit.fnDeleteRow(nRow);
+												tableFinish
+														.fnAddData([
+																msg.checkModel.checkId,
+																msg.checkModel.cdChn,
+																msg.checkModel.ywlbChn,
+																msg.checkModel.jcyqChn,
+																msg.checkModel.zxr_qrsj,
+																msg.checkModel.zxr_wcsj,
+																"<td><a class='checkWork modal-with-zoom-anim' href='javascript:;'>查看</a></td>" ]);
+											}
+											$('.modal-with-zoom-anim').magnificPopup({
+												items : {
+													src : '#modalAnim',
+													type : 'inline',
+												},
+												fixedContentPos : false,
+												fixedBgPos : true,
+
+												overflowY : 'auto',
+
+												closeBtnInside : true,
+												preloader : false,
+
+												midClick : true,
+												removalDelay : 300,
+												mainClass : 'my-mfp-zoom-in',
+												modal : true
+											});
+										},
+										error : function(jqXHR, textStatus,
+												errorThrown) {
+										},
+									});
+							$.magnificPopup.close();
+						});
+	</script>
 </body>
 
 </html>

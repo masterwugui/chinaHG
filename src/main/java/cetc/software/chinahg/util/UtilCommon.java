@@ -3,6 +3,9 @@ package cetc.software.chinahg.util;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashSet;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
 import java.util.Random;
 
 public class UtilCommon {
@@ -29,19 +32,46 @@ public class UtilCommon {
 		return flag;
 	}
 
-	/*
-	 * m : the length of the user arrary, n : the number of users we need to
-	 * select from array
-	 */
-	public HashSet<Integer> randomSelect(int m, int n) {
-		HashSet<Integer> userSet = new HashSet<Integer>();
-		if (m < n)
-			return userSet;
-		Random random = new Random();
-		while (userSet.size() < n) {
-			userSet.add((random.nextInt(m)));
+	// 从一个题目内码数组中随即抽取n道题目
+	public static HashSet<Integer> randomSelectQue(List<Integer> queArray, int n) {
+		HashSet<Integer> result = new HashSet<Integer>();
+		Random rand = new Random();
+		int maxNum = queArray.size();
+		int index = 0;
+		if (n == 0) {
+		} else if (n > maxNum) {
+			for(int queId : queArray){
+				result.add(queId);
+			}
+		} else {
+			while (result.size() < n) {
+				index = rand.nextInt(maxNum);
+				result.add(queArray.get(index));
+			}
 		}
-		return userSet;
-
+		return result;
 	}
+
+	public static HashSet<Integer> mergeSet(HashSet<Integer> jobSet,
+			HashSet<Integer> publicSet) {
+		HashSet<Integer> reSet = new HashSet<Integer>();
+		for (Iterator<Integer> it = jobSet.iterator(); it.hasNext();) {
+			reSet.add(it.next());
+		}
+		for (Iterator<Integer> it = publicSet.iterator(); it.hasNext();) {
+			reSet.add(it.next());
+		}
+		return reSet;
+	}
+
+	public static void putScore(Map<String, Integer> test, String kTip,
+			int perPoint) {
+		if (test.containsKey(kTip)) {
+			int tmpPoint = test.get(kTip) + perPoint;
+			test.put(kTip, tmpPoint);
+		} else {
+			test.put(kTip, perPoint);
+		}
+	}
+
 }

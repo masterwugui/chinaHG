@@ -1,4 +1,5 @@
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html lang="zh">
 
@@ -142,44 +143,41 @@
 								<div class="form-group">
 									<label class="col-md-2 control-label">场地类别</label>
 									<div class="col-md-9">
-										<select id="select" name="select" class="form-control"
-											size="1">
-											<option value="0">请选择</option>
-											<option value="1">场地A</option>
-											<option value="2">场地B</option>
-											<option value="3">场地C</option>
+										<select id="cdlbSelect" class="m-wrap span12 form-control"
+											style="width: 200px;">
+											<c:forEach items="${cdList}" var="cd">
+												<option value="${cd.DMBH}">${cd.DMMS}</option>
+											</c:forEach>
 										</select>
 									</div>
 								</div>
 								<div class="form-group">
 									<label class="col-md-2 control-label">业务类别</label>
 									<div class="col-md-9">
-										<select id="select" name="select" class="form-control"
-											size="1">
-											<option value="0">请选择</option>
-											<option value="1">业务A</option>
-											<option value="2">业务B</option>
-											<option value="3">业务C</option>
+										<select id="ywlbSelect" class="m-wrap span12 form-control"
+											style="width: 200px;">
+											<c:forEach items="${ywList}" var="yw">
+												<option value="${yw.DMBH}">${yw.DMMS}</option>
+											</c:forEach>
 										</select>
 									</div>
 								</div>
 								<div class="form-group">
 									<label class="col-md-2 control-label">检查要求</label>
 									<div class="col-md-9">
-										<select id="select" name="select" class="form-control"
-											size="1">
-											<option value="0">请选择</option>
-											<option value="1">检查A</option>
-											<option value="2">检查B</option>
-											<option value="3">检查C</option>
+										<select id="jcyqSelect" class="m-wrap span12 form-control"
+											style="width: 200px;">
+											<c:forEach items="${jcyqList}" var="jcyq">
+												<option value="${jcyq.DMBH}">${jcyq.DMMS}</option>
+											</c:forEach>
 										</select>
 									</div>
 								</div>
 								<div class="form-group">
 									<label class="col-md-2 control-label"></label>
 									<div class="col-md-9">
-										<a href='#modalAnim'
-											class="bk-margin-5 btn btn-labeled btn-success pull-right modal-with-zoom-anim">
+										<a onclick='cqUser()'
+											class="bk-margin-5 btn btn-labeled btn-success pull-right">
 											<span class="btn-label"><i class="fa fa-check"></i></span>确定
 										</a>
 
@@ -210,67 +208,24 @@
 											<th>场地类别</th>
 											<th>业务类别</th>
 											<th>检查要求</th>
-											<th class="hidden-phone">作业人员一</th>
-											<th class="hidden-phone">作业人员一进度</th>
-											<th class="hidden-phone">作业人员二</th>
-											<th class="hidden-phone">作业人员二进度</th>
+											<th>作业人员一</th>
+											<th>作业人员一进度</th>
+											<th>作业人员二</th>
+											<th>作业人员二进度</th>
 										</tr>
 									</thead>
 									<tbody>
-										<tr class="gradeX">
-											<td>场地类别A</td>
-											<td>业务类别C</td>
-											<td>检查要求A</td>
-											<td class="center hidden-phone">张三</td>
-											<td class="center hidden-phone">未确认</td>
-											<td class="center hidden-phone">李四</td>
-											<td class="center hidden-phone">未确认</td>
-										</tr>
-										<tr class="gradeC">
-											<td>场地类别B</td>
-											<td>业务类别A</td>
-											<td>检查要求C</td>
-											<td class="center hidden-phone">张三</td>
-											<td class="center hidden-phone">正在执行</td>
-											<td class="center hidden-phone">李四</td>
-											<td class="center hidden-phone">正在执行</td>
-										</tr>
-										<tr class="gradeA">
-											<td>场地类别C</td>
-											<td>业务类别B</td>
-											<td>检查要求B</td>
-											<td class="center hidden-phone">张三</td>
-											<td class="center hidden-phone">未确认</td>
-											<td class="center hidden-phone">李四</td>
-											<td class="center hidden-phone">未确认</td>
-										</tr>
-										<tr class="gradeA">
-											<td>场地类别A</td>
-											<td>业务类别C</td>
-											<td>检查要求C</td>
-											<td class="center hidden-phone">张三</td>
-											<td class="center hidden-phone">未确认</td>
-											<td class="center hidden-phone">李四</td>
-											<td class="center hidden-phone">未确认</td>
-										</tr>
-										<tr class="gradeA">
-											<td>场地类别B</td>
-											<td>业务类别C</td>
-											<td>检查要求A</td>
-											<td class="center hidden-phone">张三</td>
-											<td class="center hidden-phone">执行完成</td>
-											<td class="center hidden-phone">李四</td>
-											<td class="center hidden-phone">执行完成</td>
-										</tr>
-										<tr class="gradeA">
-											<td>场地类别C</td>
-											<td>业务类别A</td>
-											<td>检查要求C</td>
-											<td class="center hidden-phone">张三</td>
-											<td class="center hidden-phone">执行完成</td>
-											<td class="center hidden-phone">李四</td>
-											<td class="center hidden-phone">执行完成</td>
-										</tr>
+										<c:forEach items="${modelList}" var="model">
+											<tr>
+												<td>${model.cdChn}</td>
+												<td>${model.ywlbChn}</td>
+												<td>${model.jcyqChn}</td>
+												<td>${model.zxra_name}</td>
+												<td>${model.zxra_status}</td>
+												<td>${model.zxrb_name}</td>
+												<td>${model.zxrb_status}</td>
+											</tr>
+										</c:forEach>
 									</tbody>
 								</table>
 							</div>
@@ -349,9 +304,30 @@
 	<script src="assets/js/pages/ui-modals.js"></script>
 	<!-- end: JavaScript-->
 	<script>
-	jQuery(document).ready(function() {
-			TableEditable.init();
-		});
+		var oTable = $('#sample_editable_1').dataTable();
+		function cqUser() {
+			$.ajax({
+				url : "cqUser.json",
+				contentType : "application/json",//application/xml  
+				processData : true,//contentType为xml时，些值为false  
+				data : {
+					cd : $("#cdlbSelect").val(),
+					ywlb : $("#ywlbSelect").val(),
+					jcyq : $("#jcyqSelect").val(),
+				},
+				dataType : "json",//json--返回json数据类型；xml--返回xml  
+				success : function(msg) {
+					oTable.fnAddData([ msg.checkModel.cdChn,
+							msg.checkModel.ywlbChn, msg.checkModel.jcyqChn,
+							msg.checkModel.zxra_name,
+							msg.checkModel.zxra_status,
+							msg.checkModel.zxrb_name,
+							msg.checkModel.zxrb_status ]);
+				},
+				error : function(jqXHR, textStatus, errorThrown) {
+				},
+			});
+		}
 	</script>
 </body>
 
