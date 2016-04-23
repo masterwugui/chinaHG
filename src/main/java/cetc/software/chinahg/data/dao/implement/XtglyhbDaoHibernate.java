@@ -92,6 +92,11 @@ public class XtglyhbDaoHibernate extends BaseHibernateDAO implements XtglyhbDao 
 			model.setYh_phoneNum((String) oa[8]);
 			model.setYh_email((String) oa[9]);
 			model.setYh_address((String) oa[10]);
+			if(model.getPermission().equals("1")){
+				model.setPerChn("高级用户");
+			}else{
+				model.setPerChn("普通用户");
+			}
 			modelList.add(model);
 		}
 		return modelList;

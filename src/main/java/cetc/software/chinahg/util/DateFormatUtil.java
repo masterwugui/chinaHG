@@ -59,7 +59,7 @@ public class DateFormatUtil {
 	public static String getFormatTimeStringChn(Date date) {
 		String time;
 		if (date != null) {
-			String path = "yyyy年MM月dd日 HH时mm分ss秒";
+			String path = "yyyy年MM月dd日 HH时mm分";
 			SimpleDateFormat format = new SimpleDateFormat(path);
 			time = format.format(date);
 		} else {

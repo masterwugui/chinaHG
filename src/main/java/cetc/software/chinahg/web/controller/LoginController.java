@@ -100,6 +100,14 @@ public class LoginController implements Serializable {
 			HttpServletResponse response, ModelMap model) {
 		ModelAndView mav = new ModelAndView("Manager/settings");
 		List<zghgUserModel> userList = xtglyhbService.getUserList();
+		
+		List<ExamDmb> cdList1 = dmbDao.dmbList(CDLX1);
+		List<ExamDmb> ywist = dmbDao.dmbList(YWLB);
+		List<ExamDmb> jcyqList = dmbDao.dmbList(JCYQ);
+		mav.addObject("cdList", cdList1);
+		mav.addObject("ywList", ywist);
+		mav.addObject("jcyqList", jcyqList);
+		
 		mav.addObject("userList", userList);
 		return mav;
 	}

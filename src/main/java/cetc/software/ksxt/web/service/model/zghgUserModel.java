@@ -12,6 +12,13 @@ public class zghgUserModel {
 	String yh_phoneNum;
 	String yh_email;
 	String yh_address;
+	String perChn;
+	public String getPerChn() {
+		return perChn;
+	}
+	public void setPerChn(String perChn) {
+		this.perChn = perChn;
+	}
 	public Integer getYhbh() {
 		return yhbh;
 	}

@@ -59,6 +59,34 @@
 </head>
 
 <body>
+	<!-- dialog for confirm delete -->
+	<div id="dialog"
+		class="modal-block modal-header-color modal-block-primary mfp-hide">
+		<div class="panel">
+			<div class="panel-heading">
+				<h2 class="panel-title">确定删除？</h2>
+			</div>
+			<div class="panel-body bk-noradius">
+				<div class="modal-wrapper">
+					<div class="modal-icon">
+						<i class="fa fa-question-circle"></i>
+					</div>
+					<div class="modal-text">
+						<p>您确定删除本条目吗？</p>
+					</div>
+				</div>
+			</div>
+			<div class="panel-footer">
+				<div class="row">
+					<div class="col-md-12 text-right">
+						<button id='dialogConfirm' class="btn btn-primary modal-confirm">确认</button>
+						<button id='dialogCancel' class="btn btn-default modal-dismiss">取消</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- dialog end -->
 	<!-- Modal addUser -->
 	<div id="modalAnim"
 		class="zoom-anim-dialog modal-block modal-block-primary mfp-hide">
@@ -202,65 +230,234 @@
 						<div class="panel">
 							<div class="panel-body bk-bg-very-light-gray mailbox-menu">
 								<h5 class="bk-fg-primary">参数维护</h5>
-								<ul>
-									<li><a href="#userManage.do">人员维护 <span
+								<ul class="">
+									<li><a href="#tab_1" data-toggle="tab">人员维护 <span
 											class="ball red"></span></a></li>
-									<li><a href="#">场地类别维护 <span class="ball green"></span></a>
-									</li>
-									<li><a href="#">业务类别维护<span class="ball blue"></span></a></li>
-									<li><a href="#">检查要求维护<span class="ball orange"></span></a>
-									</li>
+									<li><a href="#tab_2" data-toggle="tab">场地类别维护 <span
+											class="ball green"></span></a></li>
+									<li><a href="#tab_3" data-toggle="tab">业务类别维护<span
+											class="ball blue"></span></a></li>
+									<li><a href="#tab_4" data-toggle="tab">检查要求维护<span
+											class="ball orange"></span></a></li>
 								</ul>
 							</div>
 						</div>
 					</div>
 					<div class="col-lg-9 col-md-8 col-sm-8 col-xs-12">
-						<div class="panel panel-default bk-bg-white">
-							<div class="panel-heading bk-bg-white">
-								<h6>
-									<i class="fa fa-table red"></i><span class="break"></span>用户信息列表
-								</h6>
-								<div class="panel-actions">
-									<a href="#" class="btn-minimize"><i class="fa fa-caret-up"></i></a>
-									<a href="#" class="btn-close"><i class="fa fa-times"></i></a>
-								</div>
-							</div>
-							<div class="panel-body">
-								<div class="row">
-									<div class="col-sm-6">
-										<div class="bk-margin-bottom-10">
-											<a href='#modalAnim'
-												class="btn btn-info modal-with-zoom-anim">增加用户<i
-												class="fa fa-plus"></i>
-											</a>
+						<div class="tab-content bk-bg-very-light-gray">
+							<div id="tab_1" class="tab-pane active">
+								<div class="panel panel-default bk-bg-white">
+									<div class="panel-heading bk-bg-white">
+										<h6>
+											<i class="fa fa-table red"></i><span class="break"></span>场地类别列表
+										</h6>
+										<div class="panel-actions">
+											<a href="#" class="btn-minimize"><i
+												class="fa fa-caret-up"></i></a> <a href="#" class="btn-close"><i
+												class="fa fa-times"></i></a>
 										</div>
 									</div>
+									<div class="panel-body">
+										<div class="row">
+											<div class="col-sm-6">
+												<div class="bk-margin-bottom-10">
+													<button id="addToTableYh" class="btn btn-info">
+														增加用户 <i class="fa fa-plus"></i>
+													</button>
+												</div>
+											</div>
+										</div>
+										<table class="table table-bordered table-striped mb-none"
+											id="datatable-yh">
+											<thead>
+												<tr>
+													<th>编号</th>
+													<th>姓名</th>
+													<th>用户名</th>
+													<th>密码</th>
+													<th>职务</th>
+													<th>工号</th>
+													<th>用户角色</th>
+													<th>操作</th>
+												</tr>
+											</thead>
+											<tbody>
+												<c:forEach items="${userList}" var="user">
+													<tr>
+														<td>${user.yhbh}</td>
+														<td>${user.yhmc}</td>
+														<td>${user.yhdm}</td>
+														<td>${user.yhkl}</td>
+														<td>${user.yh_duty}</td>
+														<td>${user.yh_jobNum}</td>
+														<td>${user.perChn}</td>
+														<td class="actions"><a href="#"
+															class="hidden on-editing save-row"><i
+																class="fa fa-save"></i></a> <a href="#"
+															class="hidden on-editing cancel-row"><i
+																class="fa fa-times"></i></a> <a href="#"
+															class="on-default edit-row"><i class="fa fa-pencil"></i></a>
+															<a href="#" class="on-default remove-row"><i
+																class="fa fa-trash-o"></i></a></td>
+													</tr>
+												</c:forEach>
+											</tbody>
+										</table>
+									</div>
 								</div>
-								<table class="table table-bordered table-striped mb-none"
-									id="sample_editable_1">
-									<thead>
-										<tr>
-											<th>用户名</th>
-											<th>姓名</th>
-											<th>职务</th>
-											<th>工号</th>
-											<th>编辑</th>
-											<th>删除</th>
-										</tr>
-									</thead>
-									<tbody>
-										<c:forEach items="${userList}" var="user">
-											<tr>
-												<td>${user.yhdm}</td>
-												<td>${user.yhmc}</td>
-												<td>${user.yh_duty}</td>
-												<td>${user.yh_jobNum}</td>
-												<td><a class="edit" href="javascript:;">编辑</a></td>
-												<td><a class="delete" href="javascript:;">删除</a></td>
-											</tr>
-										</c:forEach>
-									</tbody>
-								</table>
+							</div>
+							<div id="tab_2" class="tab-pane">
+								<div class="panel panel-default bk-bg-white">
+									<div class="panel-heading bk-bg-white">
+										<h6>
+											<i class="fa fa-table red"></i><span class="break"></span>场地类别列表
+										</h6>
+										<div class="panel-actions">
+											<a href="#" class="btn-minimize"><i
+												class="fa fa-caret-up"></i></a> <a href="#" class="btn-close"><i
+												class="fa fa-times"></i></a>
+										</div>
+									</div>
+									<div class="panel-body">
+										<div class="row">
+											<div class="col-sm-6">
+												<div class="bk-margin-bottom-10">
+													<button id="addToTableCdlb" class="btn btn-info">
+														增加场地类别 <i class="fa fa-plus"></i>
+													</button>
+												</div>
+											</div>
+										</div>
+										<table class="table table-bordered table-striped mb-none"
+											id="datatable-cdlb">
+											<thead>
+												<tr>
+													<th>编号</th>
+													<th>场地类别</th>
+													<th>操作</th>
+												</tr>
+											</thead>
+											<tbody>
+												<c:forEach items="${cdList}" var="cd">
+													<tr>
+														<td>${cd.DMBH}</td>
+														<td>${cd.DMMS}</td>
+														<td class="actions"><a href="#"
+															class="hidden on-editing save-row"><i
+																class="fa fa-save"></i></a> <a href="#"
+															class="hidden on-editing cancel-row"><i
+																class="fa fa-times"></i></a> <a href="#"
+															class="on-default edit-row"><i class="fa fa-pencil"></i></a>
+															<a href="#" class="on-default remove-row"><i
+																class="fa fa-trash-o"></i></a></td>
+													</tr>
+												</c:forEach>
+											</tbody>
+										</table>
+									</div>
+								</div>
+							</div>
+							<div id="tab_3" class="tab-pane">
+								<div class="panel panel-default bk-bg-white">
+									<div class="panel-heading bk-bg-white">
+										<h6>
+											<i class="fa fa-table red"></i><span class="break"></span>业务类别列表
+										</h6>
+										<div class="panel-actions">
+											<a href="#" class="btn-minimize"><i
+												class="fa fa-caret-up"></i></a> <a href="#" class="btn-close"><i
+												class="fa fa-times"></i></a>
+										</div>
+									</div>
+									<div class="panel-body">
+										<div class="row">
+											<div class="col-sm-6">
+												<div class="bk-margin-bottom-10">
+													<button id="addToTableYwlb" class="btn btn-info">
+														增加业务类别 <i class="fa fa-plus"></i>
+													</button>
+												</div>
+											</div>
+										</div>
+										<table class="table table-bordered table-striped mb-none"
+											id="datatable-ywlb">
+											<thead>
+												<tr>
+													<th>编号</th>
+													<th>场地类别</th>
+													<th>操作</th>
+												</tr>
+											</thead>
+											<tbody>
+												<c:forEach items="${ywList}" var="yw">
+													<tr>
+														<td>${yw.DMBH}</td>
+														<td>${yw.DMMS}</td>
+														<td class="actions"><a href="#"
+															class="hidden on-editing save-row"><i
+																class="fa fa-save"></i></a> <a href="#"
+															class="hidden on-editing cancel-row"><i
+																class="fa fa-times"></i></a> <a href="#"
+															class="on-default edit-row"><i class="fa fa-pencil"></i></a>
+															<a href="#" class="on-default remove-row"><i
+																class="fa fa-trash-o"></i></a></td>
+													</tr>
+												</c:forEach>
+											</tbody>
+										</table>
+									</div>
+								</div>
+							</div>
+							<div id="tab_4" class="tab-pane">
+								<div class="panel panel-default bk-bg-white">
+									<div class="panel-heading bk-bg-white">
+										<h6>
+											<i class="fa fa-table red"></i><span class="break"></span>检查要求列表
+										</h6>
+										<div class="panel-actions">
+											<a href="#" class="btn-minimize"><i
+												class="fa fa-caret-up"></i></a> <a href="#" class="btn-close"><i
+												class="fa fa-times"></i></a>
+										</div>
+									</div>
+									<div class="panel-body">
+										<div class="row">
+											<div class="col-sm-6">
+												<div class="bk-margin-bottom-10">
+													<button id="addToTableJcyq" class="btn btn-info">
+														增加检查要求<i class="fa fa-plus"></i>
+													</button>
+												</div>
+											</div>
+										</div>
+										<table class="table table-bordered table-striped mb-none"
+											id="datatable-jcyq">
+											<thead>
+												<tr>
+													<th>编号</th>
+													<th>场地类别</th>
+													<th>操作</th>
+												</tr>
+											</thead>
+											<tbody>
+												<c:forEach items="${jcyqList}" var="jcyq">
+													<tr>
+														<td>${jcyq.DMBH}</td>
+														<td>${jcyq.DMMS}</td>
+														<td class="actions"><a href="#"
+															class="hidden on-editing save-row"><i
+																class="fa fa-save"></i></a> <a href="#"
+															class="hidden on-editing cancel-row"><i
+																class="fa fa-times"></i></a> <a href="#"
+															class="on-default edit-row"><i class="fa fa-pencil"></i></a>
+															<a href="#" class="on-default remove-row"><i
+																class="fa fa-trash-o"></i></a></td>
+													</tr>
+												</c:forEach>
+											</tbody>
+										</table>
+									</div>
+								</div>
 							</div>
 						</div>
 					</div>
@@ -321,16 +518,19 @@
 
 	<!-- Pages JS -->
 	<script src="assets/js/pages/mailbox.js"></script>
-	<script src="assets/js/pages/table-advanced.js"></script>
+	<script src="assets/js/pages/table-editable-tab1.js"></script>
+	<script src="assets/js/pages/table-editable-tab2.js"></script>
+	<script src="assets/js/pages/table-editable-tab3.js"></script>
+	<script src="assets/js/pages/table-editable-tab4.js"></script>
 	<script src="assets/js/pages/ui-modals.js"></script>
 
 	<script>
 		var oTable = $('#sample_editable_1').dataTable();
 		$('#sample_editable_1 a.delete').live('click', function(e) {
 			e.preventDefault();
-			 if (confirm("确定要删除此用户？") == false) {
-                 return;
-             }
+			if (confirm("确定要删除此用户？") == false) {
+				return;
+			}
 			var nRow = $(this).parents('tr')[0];
 			oTable.fnDeleteRow(nRow);
 		});
@@ -351,7 +551,8 @@
 					$('#modalAnim #yhkl').val("");
 					$('#modalAnim').modal('hide');
 					oTable.fnAddData([ yhdm, '', '', '',
-							'<a class="edit" href="javascript:;">编辑</a>','<a class="delete" href="javascript:;">删除</a>' ]);
+							'<a class="edit" href="javascript:;">编辑</a>',
+							'<a class="delete" href="javascript:;">删除</a>' ]);
 				},
 				error : function(jqXHR, textStatus, errorThrown) {
 

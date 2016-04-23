@@ -1,6 +1,12 @@
 package cetc.software.chinahg.util;
 
+import java.io.UnsupportedEncodingException;
 import java.text.DecimalFormat;
+import java.util.ArrayList;
+import java.util.List;
+
+import net.sf.json.JSONArray;
+import net.sf.json.JSONObject;
 
 /**
  */
@@ -8,7 +14,7 @@ import java.text.DecimalFormat;
 /**
  * 字符串工具类
  * 
- * @author zym
+ * @author LUJUNZIZI
  * 
  */
 public class StringUtil {
@@ -713,6 +719,54 @@ public class StringUtil {
 			return null;
 		DecimalFormat df = new DecimalFormat(format);
 		return df.format(dm);
+	}
+
+	/**
+	 * ISO-8859-1编码 转 utf-8
+	 * */
+	public static String getStrConvert(String original) {
+		String convertStr = "";
+		if (isBlank(original))
+			return convertStr;
+		try {
+			convertStr = new String(original.getBytes("ISO-8859-1"), "UTF-8");
+		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+		}
+		return convertStr;
+	}
+
+	@SuppressWarnings({ "deprecation", "unchecked" })
+	public static List<String> getJsonArr(JSONObject jo, String key) {
+		List<String> reList = new ArrayList<String>();
+		if (jo.containsKey(key)) {
+			JSONArray shortArr = jo.getJSONArray(key);
+			reList = JSONArray.toList(shortArr, String.class);
+		}
+		return reList;
+	}
+
+	@SuppressWarnings({ "deprecation", "unchecked" })
+	public static List<Integer> getJsonArrInteger(JSONObject jo, String key) {
+		List<Integer> reList = new ArrayList<Integer>();
+		List<String> tmpList = new ArrayList<String>();
+		if (jo.containsKey(key)) {
+			JSONArray shortArr = jo.getJSONArray(key);
+			tmpList = JSONArray.toList(shortArr, String.class);
+		}
+		for (String s : tmpList) {
+			reList.add(Integer.parseInt(s));
+		}
+		return reList;
+	}
+
+	public static List<String> replaceList(List<String> originalList) {
+		List<String> reList = new ArrayList<String>();
+		for (String s : originalList) {
+			s = s.replaceAll("\t|\n|\r", "");
+			reList.add(s);
+		}
+		return reList;
 	}
 
 }

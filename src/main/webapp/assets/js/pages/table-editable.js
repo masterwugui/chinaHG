@@ -56,6 +56,7 @@
 	var EditableTable = {
 
 		options: {
+			addButton: '#addToTable',
 			table: '#datatable-editable',
 			dialog: {
 				wrapper: '#dialog',
