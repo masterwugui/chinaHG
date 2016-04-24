@@ -60,8 +60,8 @@
 							<img src="assets/img/avatar.jpg" class="img-circle" alt="" />
 						</figure>
 						<div class="profile-info">
-							<span class="name">张三</span> <span class="role"><i
-								class="fa fa-circle bk-fg-success"></i> 关员</span>
+							<span class="name"> ${sessionScope.yhmc}</span> <span class="role"><i
+								class="fa fa-circle bk-fg-success"></i>  ${sessionScope.yhzw}</span>
 						</div> <i class="fa custom-caret"></i>
 					</a>
 					<div class="dropdown-menu">
@@ -73,10 +73,7 @@
 										aria-valuemax="100" style="width: 60%;">60%</div>
 								</div>
 							</li>
-							<li><a href=""><i class="fa fa-user"></i> 个人资料</a></li>
 							<li><a href="#"><i class="fa fa-wrench"></i> 作业情况</a></li>
-							<li><a href="page-invoice"><i class="fa fa-usd"></i>
-									个人设置</a></li>
 							<li><a href="index.do"><i class="fa fa-power-off"></i>
 									登出</a></li>
 						</ul>

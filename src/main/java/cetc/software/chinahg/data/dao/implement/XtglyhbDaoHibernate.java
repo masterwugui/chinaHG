@@ -92,9 +92,9 @@ public class XtglyhbDaoHibernate extends BaseHibernateDAO implements XtglyhbDao 
 			model.setYh_phoneNum((String) oa[8]);
 			model.setYh_email((String) oa[9]);
 			model.setYh_address((String) oa[10]);
-			if(model.getPermission().equals("1")){
+			if (model.getPermission().equals("1")) {
 				model.setPerChn("高级用户");
-			}else{
+			} else {
 				model.setPerChn("普通用户");
 			}
 			modelList.add(model);
@@ -139,6 +139,66 @@ public class XtglyhbDaoHibernate extends BaseHibernateDAO implements XtglyhbDao 
 		model.setYh_email((String) oa[9]);
 		model.setYh_address((String) oa[10]);
 		return model;
+	}
+
+	@Override
+	public boolean insertNewHgUser(String yhdm, String yhkl, String yhmc,
+			Integer permission, String yh_duty, String yh_jobNum) {
+		String sql = "insert into pub_xtglyhb(yhdm, yhmc, yhkl, permission, yh_duty, yh_jobNum) values(?,?,?,?,?,?)";
+		Query query = getMySession().createSQLQuery(sql);
+		query.setString(0, yhdm);
+		query.setString(1, yhkl);
+		query.setString(2, yhmc);
+		query.setInteger(3, permission);
+		query.setString(4, yh_duty);
+		query.setString(5, yh_jobNum);
+		return query.executeUpdate() == 1;
+	}
+
+	@Override
+	public boolean updateHgUser(int yhbh, String yhdm, String yhkl,
+			String yhmc, Integer permission, String yh_duty, String yh_jobNum) {
+		String sql = "update pub_xtglyhb set yhdm = ? , yhmc=?, yhkl=?, permission=?, yh_duty=?, yh_jobNum=? where yhbh=?";
+		Query query = getMySession().createSQLQuery(sql);
+		query.setString(0, yhdm);
+		query.setString(1, yhmc);
+		query.setString(2, yhkl);
+		query.setInteger(3, permission);
+		query.setString(4, yh_duty);
+		query.setString(5, yh_jobNum);
+		query.setInteger(6, yhbh);
+		return query.executeUpdate() == 1;
+	}
+
+	@Override
+	public List<zghgUserModel> getUserList(int permission) {
+		String sql = "select yhbh, yhdm, yhmc, yhkl, permission, yh_duty, yh_jobNum, yh_lineNum, yh_phoneNum, yh_email, yh_address from pub_xtglyhb where permission = ?";
+		Query query = getMySession().createSQLQuery(sql);
+		query.setInteger(0, permission);
+		@SuppressWarnings("unchecked")
+		List<Object[]> reList = query.list();
+		List<zghgUserModel> modelList = new ArrayList<zghgUserModel>();
+		for (Object[] oa : reList) {
+			zghgUserModel model = new zghgUserModel();
+			model.setYhbh((Integer) oa[0]);
+			model.setYhdm((String) oa[1]);
+			model.setYhmc((String) oa[2]);
+			model.setYhkl((String) oa[3]);
+			model.setPermission((String) oa[4]);
+			model.setYh_duty((String) oa[5]);
+			model.setYh_jobNum((String) oa[6]);
+			model.setYh_lineNum((String) oa[7]);
+			model.setYh_phoneNum((String) oa[8]);
+			model.setYh_email((String) oa[9]);
+			model.setYh_address((String) oa[10]);
+			if (model.getPermission().equals("1")) {
+				model.setPerChn("高级用户");
+			} else {
+				model.setPerChn("普通用户");
+			}
+			modelList.add(model);
+		}
+		return modelList;
 	}
 
 }

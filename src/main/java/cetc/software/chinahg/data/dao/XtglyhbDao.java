@@ -15,11 +15,19 @@ public interface XtglyhbDao {
 			String yh_lineNum, String yh_phoneNum, String yh_email,
 			String yh_address);
 
+	boolean insertNewHgUser(String yhdm, String yhkl, String yhmc,
+			Integer permission, String yh_duty, String yh_jobNum);
+	
+	boolean updateHgUser(int yhbh, String yhdm, String yhkl, String yhmc,
+			Integer permission, String yh_duty, String yh_jobNum);
+
 	boolean insertNewHgUser(String yhdm, String yhkl);
 
 	boolean deleteXtglyhb(Integer yhbh);
 
 	List<zghgUserModel> getUserList();
+	
+	List<zghgUserModel> getUserList(int permission);
 
 	zghgUserModel getUser(int yhbh);
 

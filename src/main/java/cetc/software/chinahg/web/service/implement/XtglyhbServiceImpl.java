@@ -8,6 +8,7 @@ import org.springframework.stereotype.Component;
 
 import cetc.software.chinahg.data.dao.XtglyhbDao;
 import cetc.software.chinahg.data.dataobject.PubXtglYhb;
+import cetc.software.chinahg.util.StringUtil;
 import cetc.software.chinahg.web.service.XtglyhbService;
 import cetc.software.ksxt.web.service.model.zghgUserModel;
 
@@ -53,6 +54,29 @@ public class XtglyhbServiceImpl implements XtglyhbService {
 	@Override
 	public boolean insertNewHgUser(String yhdm, String yhkl) {
 		return xtglyhbDao.insertNewHgUser(yhdm, yhkl);
+	}
+
+	@Override
+	public boolean updateUser(String yhbh, String yhdm, String yhxm,
+			String yhkl, String yhzw, String yh_jobNum, int yh_permission) {
+		if (StringUtil.isBlank(yhbh)) {
+			xtglyhbDao.insertNewHgUser(yhdm, yhkl, yhxm, yh_permission, yhzw,
+					yh_jobNum);
+		} else {
+			xtglyhbDao.updateHgUser(Integer.parseInt(yhbh), yhdm, yhkl, yhxm,
+					yh_permission, yhzw, yh_jobNum);
+		}
+		return false;
+	}
+
+	@Override
+	public zghgUserModel getUser(Integer yhbh) {
+		return xtglyhbDao.getUser(yhbh);
+	}
+
+	@Override
+	public List<zghgUserModel> getUserList(int permission) {
+		return xtglyhbDao.getUserList(permission);
 	}
 
 }

@@ -225,7 +225,7 @@
 													+ data[i] + '" disabled/>');
 								} else if (i == 6) {
 									$this
-											.html('<select id="select" name="select" class="form-control" size="1"><option value="1">高级用户</option><option value="2">普通用户</option></select>');
+											.html('<select id="select" name="select" class="form-control" size="1"><option value="高级用户">高级用户</option><option value="普通用户">普通用户</option></select>');
 								} else {
 									$this
 											.html('<input type="text" class="form-control input-block" value="'
@@ -236,16 +236,25 @@
 
 		rowSave : function($row) {
 			var _self = this, $actions, values = [];
-			var dmbh = $row[0].children[0].children[0].value;
-			var cdlb = $row[0].children[1].children[0].value;
+			var yhbh = $row[0].children[0].children[0].value;
+			var yhxm = $row[0].children[1].children[0].value;
+			var yhdm = $row[0].children[2].children[0].value;
+			var yhkl = $row[0].children[3].children[0].value;
+			var yhzw = $row[0].children[4].children[0].value;
+			var yh_jobNum = $row[0].children[5].children[0].value;
+			var yh_permission = $row[0].children[6].children[0].value;
 			$.ajax({
-				url : "updateDMBH.json",// 
+				url : "updateYH.json",// 
 				contentType : "application/json",// application/xml
 				processData : true,// contentType为xml时，些值为false
 				data : {
-					lx : 1,
-					dmbh : dmbh,
-					cdlb : cdlb
+					yhbh : yhbh,
+					yhxm : yhxm,
+					yhdm : yhdm,
+					yhkl : yhkl,
+					yhzw : yhzw,
+					yh_jobNum : yh_jobNum,
+					yh_permission : yh_permission
 				},
 				dataType : "json",// json--返回json数据类型；xml--返回xml
 				success : function(msg) {
@@ -253,13 +262,17 @@
 						_self.$addButton.removeAttr('disabled');
 						$row.removeClass('adding');
 					}
+					var i = 0;
 					values = $row.find('td').map(function() {
 						var $this = $(this);
 
 						if ($this.hasClass('actions')) {
 							_self.rowSetActionsDefault($row);
 							return _self.datatable.cell(this).data();
+						} else if (i == 6) {
+							return $.trim($this.find('select').val());
 						} else {
+							i++;
 							return $.trim($this.find('input').val());
 						}
 					});
@@ -281,14 +294,13 @@
 
 		rowRemove : function($row) {
 			var _self = this;
-			var dmbh = $row[0].children[0].innerHTML;
+			var yhbh = $row[0].children[0].innerHTML;
 			$.ajax({
-				url : "deleteDMBH.json",// 
+				url : "deleteYH.json",// 
 				contentType : "application/json",// application/xml
 				processData : true,// contentType为xml时，些值为false
 				data : {
-					lx : 1,
-					dmbh : dmbh
+					yhbh : yhbh
 				},
 				dataType : "json",// json--返回json数据类型；xml--返回xml
 				success : function(msg) {

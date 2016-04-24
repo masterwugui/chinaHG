@@ -249,7 +249,7 @@
 								<div class="panel panel-default bk-bg-white">
 									<div class="panel-heading bk-bg-white">
 										<h6>
-											<i class="fa fa-table red"></i><span class="break"></span>场地类别列表
+											<i class="fa fa-table red"></i><span class="break"></span>用户列表
 										</h6>
 										<div class="panel-actions">
 											<a href="#" class="btn-minimize"><i

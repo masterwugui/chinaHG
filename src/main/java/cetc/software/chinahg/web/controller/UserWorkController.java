@@ -53,10 +53,22 @@ public class UserWorkController implements Serializable {
 				.getCheckListByYhAndStatus(yhbh, hasConfirmed);
 		List<userCheckModel> modelFinishedList = userService
 				.getCheckListByYhAndStatus(yhbh, hasFinished);
-
+		
 		mav.addObject("modelNotStartedList", modelNotStartedList);
 		mav.addObject("modelConfirmedList", modelConfirmedList);
 		mav.addObject("modelFinishedList", modelFinishedList);
+		
+		int notStarted = modelNotStartedList.size();
+		int	notFinished = modelConfirmedList.size();
+		int hasFinished = modelFinishedList.size();
+		
+		int notFinished1 = notStarted + notFinished;
+		
+		session.setAttribute("notStarted", notStarted);
+		session.setAttribute("notFinished", notFinished);
+		session.setAttribute("notFinished1", notFinished1);
+		session.setAttribute("hasFinished", hasFinished);
+		
 		return mav;
 	}
 
@@ -68,12 +80,29 @@ public class UserWorkController implements Serializable {
 		ModelAndView mav = new ModelAndView();
 		HttpSession session = request.getSession();
 		int yhbh = (int) session.getAttribute("userId");
+		
+		int notStarted = (int) session.getAttribute("notStarted");
+		int notFinished = (int) session.getAttribute("notFinished");
+		int notFinished1 = (int) session.getAttribute("notFinished1");
+		int hasFinishedNum = (int) session.getAttribute("hasFinished");
+		
 		String qrsj = new SimpleDateFormat("yyyyMMddHHmmss").format(new Date());
 		String statusStr = "";
 		if (status == 0) {
 			statusStr = hasConfirmed;
+			notStarted--;
+			notFinished++;
+			session.setAttribute("notStarted", notStarted);
+			session.setAttribute("notFinished", notFinished);
+			
 		} else if (status == 1) {
 			statusStr = hasFinished;
+			notFinished--;
+			notFinished1--;
+			hasFinishedNum++;
+			session.setAttribute("notFinished", notFinished);
+			session.setAttribute("notFinished1", notFinished1);
+			session.setAttribute("hasFinished", hasFinished);
 		}
 		userCheckModel model = userService.updateCheckStatus(checkId, yhbh,
 				statusStr, qrsj);

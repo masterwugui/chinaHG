@@ -122,8 +122,12 @@ public class LoginController implements Serializable {
 		HttpSession session = request.getSession();
 		PubXtglYhb pubXtglYhb = xtglyhbService.getXtglyhbByYhdmYhkl(yhdm, yhkl);
 		if (pubXtglYhb != null) {
+			int yhbh =pubXtglYhb.getYhbh();
 			session.setAttribute("yhmc", pubXtglYhb.getYhmc());
-			session.setAttribute("userId", pubXtglYhb.getYhbh());
+			session.setAttribute("userId", yhbh);
+			zghgUserModel userModel = xtglyhbService.getUser(yhbh);
+			session.setAttribute("yhzw", userModel.getYh_duty());
+			session.setAttribute("yhJobNum", userModel.getYh_jobNum());
 		} else {
 			System.out.println("fail to log in !");
 		}

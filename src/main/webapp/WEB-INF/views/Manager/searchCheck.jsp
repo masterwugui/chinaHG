@@ -42,6 +42,12 @@
 
 <link href="assets/plugins/jquery-datatables-bs3/css/datatables.css"
 	rel="stylesheet" />
+<link href="assets/plugins/bootstrap-datepicker/css/datepicker3.css"
+	rel="stylesheet" />
+<link
+	href="assets/plugins/bootstrap-datepicker/css/datepicker-theme.css"
+	rel="stylesheet" />
+
 <style>
 .panel .panel-body {
 	background-color: transparent;
@@ -119,7 +125,7 @@
 					<div class="pull-left">
 						<ol class="breadcrumb visible-sm visible-md visible-lg">
 							<li><a href="index1.html"><i class="icon fa fa-home"></i>首页</a></li>
-							<li class="active"><i class="fa fa-laptop"></i>现场派单</li>
+							<li class="active"><i class="fa fa-search"></i>派单查询</li>
 						</ol>
 					</div>
 					<div class="pull-right">
@@ -132,7 +138,7 @@
 						<div class="panel panel-default bk-bg-white">
 							<div class="panel-heading bk-bg-white">
 								<h6>
-									<i class="fa fa-indent red"></i>随机抽取关员
+									<i class="fa fa-indent red"></i>业务查询
 								</h6>
 								<div class="panel-actions">
 									<a href="#" class="btn-minimize"><i class="fa fa-caret-up"></i></a>
@@ -140,47 +146,89 @@
 								</div>
 							</div>
 							<div class="panel-body form-horizontal">
-								<div class="form-group">
-									<label class="col-md-2 control-label">场地类别</label>
+								<div class="form-group col-md-6">
+									<label class="col-md-3 control-label">用户名称</label>
 									<div class="col-md-9">
-										<select id="cdlbSelect" class="m-wrap  form-control"
-											>
+										<select id="yhSelect" class="m-wrap form-control">
+											<option value="0">不限</option>
+											<c:forEach items="${userList}" var="user">
+												<option value="${user.yhbh}">${user.yhmc}</option>
+											</c:forEach>
+										</select>
+									</div>
+								</div>
+								<div class="form-group col-md-6">
+									<label class="col-md-3 control-label">场地类别</label>
+									<div class="col-md-9">
+										<select id="cdlbSelect" class="m-wrap span12 form-control">
+											<option value="0">不限</option>
 											<c:forEach items="${cdList}" var="cd">
 												<option value="${cd.DMBH}">${cd.DMMS}</option>
 											</c:forEach>
 										</select>
 									</div>
 								</div>
-								<div class="form-group">
-									<label class="col-md-2 control-label">业务类别</label>
+								<div class="form-group col-md-6">
+									<label class="col-md-3 control-label">业务类别</label>
 									<div class="col-md-9">
-										<select id="ywlbSelect" class="m-wrap  form-control"
-											>
+										<select id="ywlbSelect" class="m-wrap span12 form-control">
+											<option value="0">不限</option>
 											<c:forEach items="${ywList}" var="yw">
 												<option value="${yw.DMBH}">${yw.DMMS}</option>
 											</c:forEach>
 										</select>
 									</div>
 								</div>
-								<div class="form-group">
-									<label class="col-md-2 control-label">检查要求</label>
+								<div class="form-group col-md-6">
+									<label class="col-md-3 control-label">检查要求</label>
 									<div class="col-md-9">
-										<select id="jcyqSelect" class="m-wrap  form-control"
-											>
+										<select id="jcyqSelect" class="m-wrap span12 form-control">
+											<option value="0">不限</option>
 											<c:forEach items="${jcyqList}" var="jcyq">
 												<option value="${jcyq.DMBH}">${jcyq.DMMS}</option>
 											</c:forEach>
 										</select>
 									</div>
 								</div>
-								<div class="form-group">
-									<label class="col-md-2 control-label"></label>
+								<div class="form-group col-md-6">
+									<label class="col-md-3 control-label">派单生成时间</label>
 									<div class="col-md-9">
-										<a onclick='cqUser()'
+										<div class="input-daterange input-group"
+											data-plugin-datepicker>
+											<span class="input-group-addon"> <i
+												class="fa fa-calendar"></i>
+											</span> <input type="text" class="form-control" name="start"
+												id="startScsj" /> <span class="input-group-addon">到</span>
+											<input type="text" class="form-control" name="end"
+												id="endScsj" />
+										</div>
+									</div>
+								</div>
+								<div class="form-group col-md-6">
+									<label class="col-md-3 control-label">完成时间</label>
+									<div class="col-md-9">
+										<div class="input-daterange input-group"
+											data-plugin-datepicker>
+											<span class="input-group-addon"> <i
+												class="fa fa-calendar"></i>
+											</span> <input type="text" class="form-control" name="start"
+												id="startWcsj" /> <span class="input-group-addon">到</span>
+											<input type="text" class="form-control" name="end"
+												id="endWcsj" />
+										</div>
+									</div>
+								</div>
+								<div class="form-group">
+									<label class="col-md-3 control-label"></label>
+									<div class="col-md-9">
+										<a onclick='cxChecks()'
 											class="bk-margin-5 btn btn-labeled btn-success pull-right">
-											<span class="btn-label"><i class="fa fa-check"></i></span>确定
+											<span class="btn-label"><i class="fa fa-check"></i></span>查询
 										</a>
-
+										<a href='printSearchResult.do'
+											class="bk-margin-5 btn btn-labeled btn-primary pull-right">
+											<span class="btn-label"><i class="fa fa-print"></i></span>打印
+										</a>
 									</div>
 								</div>
 							</div>
@@ -192,7 +240,7 @@
 						<div class="panel panel-default bk-bg-white">
 							<div class="panel-heading bk-bg-white">
 								<h6>
-									<i class="fa fa-table red"></i><span class="break"></span>作业进度
+									<i class="fa fa-table red"></i><span class="break"></span>作业列表
 								</h6>
 								<div class="panel-actions">
 									<a href="#" class="btn-minimize"><i class="fa fa-caret-up"></i></a>
@@ -205,13 +253,14 @@
 									id="sample_editable_1">
 									<thead>
 										<tr>
+											<th>生成时间</th>
+											<th>用户名称</th>
 											<th>场地类别</th>
 											<th>业务类别</th>
-											<th>检查要求</th>
-											<th>作业人员一</th>
-											<th>作业人员一进度</th>
-											<th>作业人员二</th>
-											<th>作业人员二进度</th>
+											<th>检查内容</th>
+											<th>确认时间</th>
+											<th>完成时间</th>
+											<th>派单领导</th>
 										</tr>
 									</thead>
 									<tbody>
@@ -223,6 +272,7 @@
 												<td>${model.zxra_name}</td>
 												<td>${model.zxra_status}</td>
 												<td>${model.zxrb_name}</td>
+												<td>${model.zxrb_status}</td>
 												<td>${model.zxrb_status}</td>
 											</tr>
 										</c:forEach>
@@ -280,6 +330,8 @@
 	<script
 		src="assets/plugins/jquery-datatables/media/js/jquery.dataTables.js"></script>
 	<script
+		src="assets/plugins/bootstrap-datepicker/js/bootstrap-datepicker.js"></script>
+	<script
 		src="assets/plugins/jquery-datatables/extras/TableTools/js/dataTables.tableTools.min.js"></script>
 	<script src="assets/plugins/jquery-datatables-bs3/js/datatables.js"></script>
 
@@ -292,31 +344,57 @@
 	<!-- <script src="assets/js/pages/table-advanced.js"></script> -->
 	<script src="assets/js/pages/table-advanced.js"></script>
 	<script src="assets/js/pages/ui-modals.js"></script>
+	<script src="assets/js/pages/form-elements.js"></script>
 	<!-- end: JavaScript-->
 	<script>
 		var oTable = $('#sample_editable_1').dataTable();
-		function cqUser() {
-			$.ajax({
-				url : "cqUser.json",
-				contentType : "application/json",//application/xml  
-				processData : true,//contentType为xml时，些值为false  
-				data : {
-					cd : $("#cdlbSelect").val(),
-					ywlb : $("#ywlbSelect").val(),
-					jcyq : $("#jcyqSelect").val(),
-				},
-				dataType : "json",//json--返回json数据类型；xml--返回xml  
-				success : function(msg) {
-					oTable.fnAddData([ msg.checkModel.cdChn,
-							msg.checkModel.ywlbChn, msg.checkModel.jcyqChn,
-							msg.checkModel.zxra_name,
-							msg.checkModel.zxra_status,
-							msg.checkModel.zxrb_name,
-							msg.checkModel.zxrb_status ]);
-				},
-				error : function(jqXHR, textStatus, errorThrown) {
-				},
-			});
+		function cxChecks() {
+			oTable.fnClearTable();
+			var yhbh = $('#yhSelect').val();
+			var cd = $("#cdlbSelect").val();
+			var ywlb = $("#ywlbSelect").val();
+			var jcyq = $("#jcyqSelect").val();
+			var startScsj = $('#startScsj').val();
+			var endScsj = $('#endScsj').val();
+			var startWcsj = $('#startWcsj').val();
+			var endWcsj = $('#endWcsj').val();
+			if (startScsj == "" || endScsj == "") {
+				alert("请选择派单生成时间的范围");
+			} else if (startWcsj == "" || endWcsj == "") {
+				alert("请选择派单完成时间的范围");
+			} else {
+				startScsj = startScsj + " 00:00:00";
+				endScsj = endScsj + " 23:59:59";
+				startWcsj = startWcsj + " 00:00:00";
+				endWcsj = endWcsj + " 23:59:59";
+				$.ajax({
+					url : "searchChecks.json",
+					contentType : "application/json",//application/xml  
+					processData : true,//contentType为xml时，些值为false  
+					data : {
+						yhbh : yhbh,
+						cd : cd,
+						ywlb : ywlb,
+						jcyq : jcyq,
+						startScsj : startScsj,
+						endScsj : endScsj,
+						startWcsj : startWcsj,
+						endWcsj : endWcsj
+					},
+					dataType : "json",//json--返回json数据类型；xml--返回xml  
+					success : function(msg) {
+						for (var i = 0; i < msg.modelList.length; i++) {
+							var model = msg.modelList[i];
+							oTable.fnAddData([ model.scsj, model.zxr_name,
+									model.cdChn, model.ywlbChn, model.jcyqChn,
+									model.zxr_qrsj, model.zxr_wcsj,
+									model.scr_name ]);
+						}
+					},
+					error : function(jqXHR, textStatus, errorThrown) {
+					},
+				});
+			}
 		}
 	</script>
 </body>

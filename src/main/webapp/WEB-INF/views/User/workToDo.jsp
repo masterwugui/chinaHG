@@ -148,18 +148,18 @@
 									<div class="row">
 										<div
 											class="col-lg-12 col-md-12 col-sm-12 col-xs-12 bk-vcenter text-center">
-											<div class="bk-avatar">
+											<div class="bk-avatar hidden">
 												<img src="assets/img/avatar.jpg" alt=""
 													class="img-circle bk-img-120 bk-border-light-gray bk-border-3x" />
 											</div>
-											<h4 class="bk-margin-top-10 bk-docs-font-weight-300">张三</h4>
+											<h4 class="bk-margin-top-10 bk-docs-font-weight-300"> ${sessionScope.yhmc}</h4>
 										</div>
 										<hr class="bk-margin-off" />
 
 										<div
 											class="col-lg-12 col-md-12 col-sm-12 col-xs-12 text-left bk-vcenter text-center">
 											<hr class="bk-margin-off" />
-											<small>待确认： 6件</small>
+											<small>待确认：<span>${sessionScope.notStarted}</span>件</small>
 											<div class="progress bk-margin-bottom-10"
 												style="height: 8px;">
 												<div class="progress thin progress-striped active">
@@ -170,7 +170,7 @@
 													</div>
 												</div>
 											</div>
-											<small>待执行： 6件</small>
+											<small>待执行：<span>${sessionScope.notFinished}</span>件</small>
 											<div class="progress bk-margin-bottom-10"
 												style="height: 8px;">
 												<div class="progress thin progress-striped active">
@@ -181,7 +181,7 @@
 													</div>
 												</div>
 											</div>
-											<small>已完成： 2件</small>
+											<small>已完成： <span>${sessionScope.hasFinished}</span>件</small>
 											<div class="progress bk-margin-off-bottom"
 												style="height: 8px;">
 												<div class="progress thin progress-striped active">
@@ -226,7 +226,7 @@
 																	<h5
 																		class="bk-fg-primary bk-fg-darken bk-margin-off-bottom">职务</h5>
 																	<p>
-																		<small>科员</small>
+																		<small>${sessionScope.yhzw}</small>
 																	</p>
 																</a>
 															</div>
@@ -243,7 +243,7 @@
 																	<h5
 																		class="bk-fg-info bk-fg-darken bk-margin-off-bottom">工号</h5>
 																	<p>
-																		<small>014503</small>
+																		<small>${sessionScope.yhJobNum}</small>
 																	</p>
 																</a>
 															</div>

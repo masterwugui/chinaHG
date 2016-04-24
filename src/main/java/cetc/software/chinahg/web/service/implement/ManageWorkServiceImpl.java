@@ -20,7 +20,7 @@ import cetc.software.ksxt.web.service.model.zghgUserModel;
 
 @Component("manageWorkService")
 public class ManageWorkServiceImpl implements ManageWorkService {
-	
+
 	private DmbDao dmbDao;
 
 	public DmbDao getDmbDao() {
@@ -31,7 +31,7 @@ public class ManageWorkServiceImpl implements ManageWorkService {
 	public void setDmbDao(DmbDao dmbDao) {
 		this.dmbDao = dmbDao;
 	}
-	
+
 	private XtglyhbDao xtglyhbDao;
 
 	public XtglyhbDao getXtglyhbDao() {
@@ -55,7 +55,8 @@ public class ManageWorkServiceImpl implements ManageWorkService {
 	}
 
 	@Override
-	public checkModel cqUser(int cd, int ywlb, int jcyq, String scrYhmc, int scrYhbh, String scsj) {
+	public checkModel cqUser(int cd, int ywlb, int jcyq, String scrYhmc,
+			int scrYhbh, String scsj) {
 		List<Integer> userToBeChooseList = xtglyhbDao.getUserToBeChooseList();
 		HashSet<Integer> zxrSet = UtilCommon.randomSelectQue(
 				userToBeChooseList, 2);
@@ -66,11 +67,12 @@ public class ManageWorkServiceImpl implements ManageWorkService {
 		}
 		zghgUserModel zxrA = modelList.get(0);
 		zghgUserModel zxrB = modelList.get(1);
-		
+
 		String NotStarted = "未开始";
-		checkDao.insertNewCheck(cd, ywlb, jcyq, NotStarted, NotStarted, scsj, zxrA.getYhbh(),
-				zxrA.getYhmc(), zxrB.getYhbh(), zxrB.getYhmc(), scrYhbh, scrYhmc);
-		
+		checkDao.insertNewCheck(cd, ywlb, jcyq, NotStarted, NotStarted, scsj,
+				zxrA.getYhbh(), zxrA.getYhmc(), zxrB.getYhbh(), zxrB.getYhmc(),
+				scrYhbh, scrYhmc);
+
 		checkModel model = new checkModel();
 		model.setJcyq(jcyq);
 		model.setYwlb(ywlb);
@@ -79,17 +81,34 @@ public class ManageWorkServiceImpl implements ManageWorkService {
 		model.setZxra_status(NotStarted);
 		model.setZxrb_name(zxrB.getYhmc());
 		model.setZxrb_status(NotStarted);
-		
+
 		return model;
 	}
-	
+
 	private static int CDLX1 = 1, CDLX2 = 2, CDLX3 = 3, JCNR = 4, JCYQ = 5,
 			YWLB = 6;
-	
+
 	@Override
 	public List<checkModel> getCheckList() {
 		List<checkModel> modelList = checkDao.getCheckList();
-		for(checkModel model : modelList){
+		for (checkModel model : modelList) {
+			model.setCdChn(dmbDao.getDmms(CDLX1, model.getCd()));
+			model.setJcyqChn(dmbDao.getDmms(JCYQ, model.getJcyq()));
+			model.setYwlbChn(dmbDao.getDmms(YWLB, model.getYwlb()));
+		}
+		return modelList;
+	}
+
+	@Override
+	public List<userCheckModel> searchChecks(int yhbh, int cd, int ywlb,
+			int jcyq, String startScsj, String endScsj, String startWcsj,
+			String endWcsj) {
+		List<userCheckModel> modelList = checkDao.getCheckAListByYhAndStatus(
+				yhbh, cd, ywlb, jcyq, startScsj, endScsj, startWcsj, endWcsj);
+		List<userCheckModel> modelList1 = checkDao.getCheckBListByYhAndStatus(
+				yhbh, cd, ywlb, jcyq, startScsj, endScsj, startWcsj, endWcsj);
+		modelList.addAll(modelList1);
+		for (userCheckModel model : modelList) {
 			model.setCdChn(dmbDao.getDmms(CDLX1, model.getCd()));
 			model.setJcyqChn(dmbDao.getDmms(JCYQ, model.getJcyq()));
 			model.setYwlbChn(dmbDao.getDmms(YWLB, model.getYwlb()));

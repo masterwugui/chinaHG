@@ -105,8 +105,10 @@ public class CheckDaoHibernate extends BaseHibernateDAO implements CheckDao {
 			model.setScsj(DateFormatUtil.getFormatTimeStringChn((Date) oa[4]));
 			model.setCheckId((int) oa[0]);
 			model.setZxr_name((String) oa[8]);
-			model.setZxr_qrsj(DateFormatUtil.getFormatTimeStringChn((Date) oa[9]));
-			model.setZxr_wcsj(DateFormatUtil.getFormatTimeStringChn((Date) oa[10]));
+			model.setZxr_qrsj(DateFormatUtil
+					.getFormatTimeStringChn((Date) oa[9]));
+			model.setZxr_wcsj(DateFormatUtil
+					.getFormatTimeStringChn((Date) oa[10]));
 			model.setZxr_yhbh((int) oa[7]);
 			modelList.add(model);
 		}
@@ -132,8 +134,10 @@ public class CheckDaoHibernate extends BaseHibernateDAO implements CheckDao {
 			model.setScsj(DateFormatUtil.getFormatTimeStringChn((Date) oa[4]));
 			model.setCheckId((int) oa[0]);
 			model.setZxr_name((String) oa[12]);
-			model.setZxr_qrsj(DateFormatUtil.getFormatTimeStringChn((Date) oa[13]));
-			model.setZxr_wcsj(DateFormatUtil.getFormatTimeStringChn((Date) oa[14]));
+			model.setZxr_qrsj(DateFormatUtil
+					.getFormatTimeStringChn((Date) oa[13]));
+			model.setZxr_wcsj(DateFormatUtil
+					.getFormatTimeStringChn((Date) oa[14]));
 			model.setZxr_yhbh((int) oa[11]);
 			modelList.add(model);
 		}
@@ -186,5 +190,119 @@ public class CheckDaoHibernate extends BaseHibernateDAO implements CheckDao {
 		query.setInteger(2, yhbh);
 		query.setInteger(3, checkBh);
 		return query.executeUpdate() == 1;
+	}
+
+	@Override
+	public List<userCheckModel> getCheckAListByYhAndStatus(int yhbh, int cd,
+			int ywlb, int jcyq, String startScsj, String endScsj,
+			String startWcsj, String endWcsj) {
+		Query query;
+		String sql = "select * from hg_check where ck_scsj > ? and ck_scsj < ? and ck_zxra_wcsj > ? and ck_zxra_wcsj < ? and ck_zxra_status = '已完成'";
+		List<Integer> obj = new ArrayList<Integer>();
+
+		if (yhbh > 0) {
+			obj.add(yhbh);
+			sql += " and ck_zxra_yhbh = ?";
+		}
+
+		if (cd > 0) {
+			obj.add(cd);
+			sql += " and ck_cdlb = ?";
+		}
+
+		if (ywlb > 0) {
+			obj.add(ywlb);
+			sql += " and ck_ywlb = ?";
+		}
+
+		if (jcyq > 0) {
+			obj.add(jcyq);
+			sql += " and ck_jcyq = ?";
+		}
+		query = getMySession().createSQLQuery(sql);
+		query.setString(0, startScsj);
+		query.setString(1, endScsj);
+		query.setString(2, startWcsj);
+		query.setString(3, endWcsj);
+		for (int i = 0; i < obj.size(); i++) {
+			query.setInteger(i + 4, obj.get(i));
+		}
+		@SuppressWarnings("unchecked")
+		List<Object[]> reList = query.list();
+		List<userCheckModel> modelList = new ArrayList<userCheckModel>();
+		for (Object[] oa : reList) {
+			userCheckModel model = new userCheckModel();
+			model.setCd((int) oa[1]);
+			model.setJcyq((int) oa[2]);
+			model.setYwlb((int) oa[3]);
+			model.setScr_name((String) oa[6]);
+			model.setScsj(DateFormatUtil.getFormatTimeStringChn((Date) oa[4]));
+			model.setCheckId((int) oa[0]);
+			model.setZxr_name((String) oa[8]);
+			model.setZxr_qrsj(DateFormatUtil
+					.getFormatTimeStringChn((Date) oa[9]));
+			model.setZxr_wcsj(DateFormatUtil
+					.getFormatTimeStringChn((Date) oa[10]));
+			model.setZxr_yhbh((int) oa[7]);
+			modelList.add(model);
+		}
+		return modelList;
+	}
+
+	@Override
+	public List<userCheckModel> getCheckBListByYhAndStatus(int yhbh, int cd,
+			int ywlb, int jcyq, String startScsj, String endScsj,
+			String startWcsj, String endWcsj) {
+		Query query;
+		String sql = "select * from hg_check where ck_scsj > ? and ck_scsj < ? and ck_zxrb_wcsj > ? and ck_zxrb_wcsj < ? and ck_zxrb_status = '已完成'";
+		List<Integer> obj = new ArrayList<Integer>();
+
+		if (yhbh > 0) {
+			obj.add(yhbh);
+			sql += " and ck_zxrb_yhbh = ?";
+		}
+
+		if (cd > 0) {
+			obj.add(cd);
+			sql += " and ck_cdlb = ?";
+		}
+
+		if (ywlb > 0) {
+			obj.add(ywlb);
+			sql += " and ck_ywlb = ?";
+		}
+
+		if (jcyq > 0) {
+			obj.add(jcyq);
+			sql += " and ck_jcyq = ?";
+		}
+		query = getMySession().createSQLQuery(sql);
+		query.setString(0, startScsj);
+		query.setString(1, endScsj);
+		query.setString(2, startWcsj);
+		query.setString(3, endWcsj);
+		for (int i = 0; i < obj.size(); i++) {
+			query.setInteger(i + 4, obj.get(i));
+		}
+		@SuppressWarnings("unchecked")
+		List<Object[]> reList = query.list();
+		List<userCheckModel> modelList = new ArrayList<userCheckModel>();
+		for (Object[] oa : reList) {
+			userCheckModel model = new userCheckModel();
+			model.setCd((int) oa[1]);
+			model.setJcyq((int) oa[2]);
+			model.setYwlb((int) oa[3]);
+			model.setScr_name((String) oa[6]);
+			model.setScsj(DateFormatUtil.getFormatTimeStringChn((Date) oa[4]));
+			model.setCheckId((int) oa[0]);
+			model.setZxr_name((String) oa[12]);
+			model.setZxr_qrsj(DateFormatUtil
+					.getFormatTimeStringChn((Date) oa[13]));
+			model.setZxr_wcsj(DateFormatUtil
+					.getFormatTimeStringChn((Date) oa[14]));
+			model.setZxr_yhbh((int) oa[11]);
+			modelList.add(model);
+		}
+		return modelList;
 	}
 }

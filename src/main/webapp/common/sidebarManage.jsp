@@ -19,6 +19,9 @@
 					<li class="active"><a href="toManageHome.do"> <i
 							class="fa fa-laptop" aria-hidden="true"></i><span>首页</span>
 					</a></li>
+					<li><a href="toCheckSearch.do"> <i class="fa fa-search"
+							aria-hidden="true"></i><span>派单查询</span>
+					</a></li>
 					<li><a href="toSettings.do"> <i class="fa fa-cog"
 							aria-hidden="true"></i><span>参数维护</span>
 					</a></li>

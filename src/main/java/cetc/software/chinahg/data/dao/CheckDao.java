@@ -18,8 +18,16 @@ public interface CheckDao {
 
 	List<userCheckModel> getCheckAListByYhAndStatus(int yhbh, String status);
 
-	List<userCheckModel> getCheckBListByYhAndStatus(int yhbh, String status);
+	List<userCheckModel> getCheckAListByYhAndStatus(int yhbh, int cd, int ywlb,
+			int jcyq, String startScsj, String endScsj, String startWcsj,
+			String endWcsj);
+
+	List<userCheckModel> getCheckBListByYhAndStatus(int yhbh, int cd, int ywlb,
+			int jcyq, String startScsj, String endScsj, String startWcsj,
+			String endWcsj);
 	
+	List<userCheckModel> getCheckBListByYhAndStatus(int yhbh, String status);
+
 	boolean confirmACheckStatus(int yhbh, int checkBh, String status,
 			String qrsj);
 

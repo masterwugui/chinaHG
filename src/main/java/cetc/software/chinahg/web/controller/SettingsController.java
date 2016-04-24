@@ -57,6 +57,38 @@ public class SettingsController implements Serializable {
 		return mav;
 	}
 
+	@RequestMapping(value = "updateYH.json")
+	public void updateYH(
+			HttpServletRequest request,
+			HttpServletResponse response,
+			@RequestParam(value = "yhbh", required = true) String yhbh,
+			@RequestParam(value = "yhxm", required = true) String yhxm,
+			@RequestParam(value = "yhdm", required = true) String yhdm,
+			@RequestParam(value = "yhzw", required = true) String yhzw,
+			@RequestParam(value = "yh_jobNum", required = true) String yh_jobNum,
+			@RequestParam(value = "yh_permission", required = true) String yh_permission,
+			@RequestParam(value = "yhkl", required = true) String yhkl) {
+		int permisssion = 2;
+		yh_permission = StringUtil.getStrConvert(yh_permission);
+		if (yh_permission.equals("高级用户")) {
+			permisssion = 1;
+		} else if (yh_permission.equals("普通用户")) {
+			permisssion = 2;
+		}
+		xtglyhbService.updateUser(StringUtil.getStrConvert(yhbh),
+				StringUtil.getStrConvert(yhdm), StringUtil.getStrConvert(yhxm),
+				StringUtil.getStrConvert(yhkl), StringUtil.getStrConvert(yhzw),
+				StringUtil.getStrConvert(yh_jobNum), permisssion);
+	}
+	
+	@RequestMapping(value = "deleteYH.json")
+	public void deleteYH(
+			HttpServletRequest request,
+			HttpServletResponse response,
+			@RequestParam(value = "yhbh", required = true) int yhbh) {
+		xtglyhbService.deleteXtglyhb(yhbh);
+	}
+	
 	@RequestMapping(value = "getMaxDMBH.json")
 	public ModelAndView getMaxDMBH(HttpServletRequest request,
 			HttpServletResponse response,
