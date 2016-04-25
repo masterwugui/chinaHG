@@ -14,6 +14,20 @@ public class userCheckModel {
 	String zxr_qrsj;
 	String zxr_wcsj;
 	String scr_name;
+	int scr_bh;
+	public int getScr_bh() {
+		return scr_bh;
+	}
+	public void setScr_bh(int scr_bh) {
+		this.scr_bh = scr_bh;
+	}
+	String zxr_status;
+	public String getZxr_status() {
+		return zxr_status;
+	}
+	public void setZxr_status(String zxr_status) {
+		this.zxr_status = zxr_status;
+	}
 	public String getScr_name() {
 		return scr_name;
 	}

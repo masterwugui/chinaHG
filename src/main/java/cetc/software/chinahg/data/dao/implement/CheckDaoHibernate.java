@@ -15,6 +15,28 @@ import cetc.software.ksxt.web.service.model.zghgUserModel;
 
 @Component("checkDao")
 public class CheckDaoHibernate extends BaseHibernateDAO implements CheckDao {
+	@Override
+	public boolean insertNewCheckYH(int ckbh, int yhbh, String status) {
+		String sql = "insert into hg_ck_yh(ckbh, yhbh,status) values(?,?,?)";
+		Query query = getMySession().createSQLQuery(sql);
+		query.setInteger(0, ckbh);
+		query.setInteger(1, yhbh);
+		query.setString(2, status);
+		return query.executeUpdate() == 1;
+	}
+
+	@Override
+	public boolean insertNewCheck(int ck_cdlb, int ck_ywlb, int ck_jcyq,
+			String ck_scsj, int ck_scr) {
+		String sql = "insert into hg_check(ck_cdlb, ck_ywlb,ck_jcyq,ck_scsj,ck_scr_yhbh) values(?,?,?,?,?)";
+		Query query = getMySession().createSQLQuery(sql);
+		query.setInteger(0, ck_cdlb);
+		query.setInteger(1, ck_ywlb);
+		query.setInteger(2, ck_jcyq);
+		query.setString(3, ck_scsj);
+		query.setInteger(4, ck_scr);
+		return query.executeUpdate() == 1;
+	}
 
 	@Override
 	public boolean insertNewCheck(int ck_ctlb, int ck_ywlb, int ck_jcyq,
@@ -39,57 +61,57 @@ public class CheckDaoHibernate extends BaseHibernateDAO implements CheckDao {
 	}
 
 	@Override
-	public List<checkModel> getCheckList() {
-		String sql = "select * from hg_check";
+	public List<userCheckModel> getCheckListNew() {
+		String sql = "select A.ck_bh, A.ck_cdlb, A.ck_jcyq, A.ck_ywlb, A.ck_scsj, B.status,B.yhbh, C.yhmc from hg_check A, hg_ck_yh B, pub_Xtglyhb C where A.ck_bh = B.ckbh and B.yhbh = C.yhbh and A.ck_bh in(select ckbh from hg_ck_yh where status='未开始')";
 		Query query = getMySession().createSQLQuery(sql);
 		@SuppressWarnings("unchecked")
 		List<Object[]> reList = query.list();
-		List<checkModel> modelList = new ArrayList<checkModel>();
+		List<userCheckModel> modelList = new ArrayList<userCheckModel>();
 		for (Object[] oa : reList) {
-			checkModel model = new checkModel();
+			userCheckModel model = new userCheckModel();
+			model.setCheckId((int) oa[0]);
 			model.setCd((int) oa[1]);
 			model.setJcyq((int) oa[2]);
 			model.setYwlb((int) oa[3]);
 			model.setScsj(DateFormatUtil.getFormatDateString((Date) oa[4]));
-			model.setZxra_name((String) oa[8]);
-			model.setZxrb_name((String) oa[12]);
-			model.setZxra_status((String) oa[16]);
-			model.setZxrb_status((String) oa[17]);
+			model.setZxr_status((String) oa[5]);
+			model.setZxr_yhbh((int) oa[6]);
+			model.setZxr_name((String) oa[7]);
 			modelList.add(model);
 		}
 		return modelList;
 	}
 
 	@Override
-	public checkModel getCheckByCheckBh(int ck_bh) {
-		String sql = "select * from hg_check where ck_bh =?";
+	public userCheckModel getCheckByCheckBhAndYhbh(int yhbh, int ck_bh) {
+		String sql = "select A.ck_bh, A.ck_cdlb, A.ck_jcyq, A.ck_ywlb, A.ck_scsj, A.ck_scr_yhbh, C.yhmc, B.yhbh, D.yhmc, "
+				+ "B.qrsj, B.wcsj from hg_check A, hg_ck_yh B, pub_xtglyhb C, pub_xtglyhb D "
+				+ " where B.yhbh = ? and B.ckbh = ? and A.ck_bh = B.ckbh and A.ck_scr_yhbh = C.yhbh and B.yhbh = D.yhbh";
+		;
 		Query query = getMySession().createSQLQuery(sql);
-		query.setInteger(0, ck_bh);
+		query.setInteger(0, yhbh);
+		query.setInteger(1, ck_bh);
 		Object[] oa = (Object[]) query.list().get(0);
-		checkModel model = new checkModel();
-		model.setCk_bh((int) oa[0]);
+		userCheckModel model = new userCheckModel();
+		model.setCheckId((int) oa[0]);
 		model.setCd((int) oa[1]);
 		model.setJcyq((int) oa[2]);
 		model.setYwlb((int) oa[3]);
 		model.setScsj(DateFormatUtil.getFormatTimeStringChn((Date) oa[4]));
-		model.setScrName((String) oa[6]);
-		model.setZxra_bh((int) oa[7]);
-		model.setZxrb_bh((int) oa[11]);
-		model.setZxra_name((String) oa[8]);
-		model.setZxra_qrsj(DateFormatUtil.getFormatTimeStringChn((Date) oa[9]));
-		model.setZxra_wcsj(DateFormatUtil.getFormatTimeStringChn((Date) oa[10]));
-		model.setZxrb_name((String) oa[12]);
-		model.setZxrb_qrsj(DateFormatUtil.getFormatTimeStringChn((Date) oa[13]));
-		model.setZxrb_wcsj(DateFormatUtil.getFormatTimeStringChn((Date) oa[14]));
-		model.setZxra_status((String) oa[16]);
-		model.setZxrb_status((String) oa[17]);
+		model.setScr_name((String) oa[6]);
+		model.setZxr_yhbh((int) oa[7]);
+		model.setZxr_name((String) oa[8]);
+		model.setZxr_qrsj(DateFormatUtil.getFormatTimeStringChn((Date) oa[9]));
+		model.setZxr_wcsj(DateFormatUtil.getFormatTimeStringChn((Date) oa[10]));
 		return model;
 	}
 
 	@Override
-	public List<userCheckModel> getCheckAListByYhAndStatus(int yhbh,
+	public List<userCheckModel> getCheckListByYhAndStatus(int yhbh,
 			String status) {
-		String sql = "select * from hg_check where ck_zxra_yhbh = ? and ck_zxra_status = ?";
+		String sql = "select A.ck_bh, A.ck_cdlb, A.ck_jcyq, A.ck_ywlb, A.ck_scsj, A.ck_scr_yhbh, C.yhmc, B.yhbh, D.yhmc, "
+				+ "B.qrsj, B.wcsj from hg_check A, hg_ck_yh B, pub_xtglyhb C, pub_xtglyhb D "
+				+ " where B.yhbh = ? and b.status = ? and A.ck_bh = B.ckbh and A.ck_scr_yhbh = C.yhbh and B.yhbh = D.yhbh";
 		Query query = getMySession().createSQLQuery(sql);
 		query.setInteger(0, yhbh);
 		query.setString(1, status);
@@ -98,56 +120,28 @@ public class CheckDaoHibernate extends BaseHibernateDAO implements CheckDao {
 		List<userCheckModel> modelList = new ArrayList<userCheckModel>();
 		for (Object[] oa : reList) {
 			userCheckModel model = new userCheckModel();
+			model.setCheckId((int) oa[0]);
 			model.setCd((int) oa[1]);
 			model.setJcyq((int) oa[2]);
 			model.setYwlb((int) oa[3]);
-			model.setScr_name((String) oa[6]);
 			model.setScsj(DateFormatUtil.getFormatTimeStringChn((Date) oa[4]));
-			model.setCheckId((int) oa[0]);
+			model.setScr_name((String) oa[6]);
+			model.setZxr_yhbh((int) oa[7]);
 			model.setZxr_name((String) oa[8]);
 			model.setZxr_qrsj(DateFormatUtil
 					.getFormatTimeStringChn((Date) oa[9]));
 			model.setZxr_wcsj(DateFormatUtil
 					.getFormatTimeStringChn((Date) oa[10]));
-			model.setZxr_yhbh((int) oa[7]);
+
 			modelList.add(model);
 		}
 		return modelList;
 	}
 
 	@Override
-	public List<userCheckModel> getCheckBListByYhAndStatus(int yhbh,
-			String status) {
-		String sql = "select * from hg_check where ck_zxrb_yhbh = ? and ck_zxrb_status = ?";
-		Query query = getMySession().createSQLQuery(sql);
-		query.setInteger(0, yhbh);
-		query.setString(1, status);
-		@SuppressWarnings("unchecked")
-		List<Object[]> reList = query.list();
-		List<userCheckModel> modelList = new ArrayList<userCheckModel>();
-		for (Object[] oa : reList) {
-			userCheckModel model = new userCheckModel();
-			model.setCd((int) oa[1]);
-			model.setJcyq((int) oa[2]);
-			model.setYwlb((int) oa[3]);
-			model.setScr_name((String) oa[6]);
-			model.setScsj(DateFormatUtil.getFormatTimeStringChn((Date) oa[4]));
-			model.setCheckId((int) oa[0]);
-			model.setZxr_name((String) oa[12]);
-			model.setZxr_qrsj(DateFormatUtil
-					.getFormatTimeStringChn((Date) oa[13]));
-			model.setZxr_wcsj(DateFormatUtil
-					.getFormatTimeStringChn((Date) oa[14]));
-			model.setZxr_yhbh((int) oa[11]);
-			modelList.add(model);
-		}
-		return modelList;
-	}
-
-	@Override
-	public boolean confirmACheckStatus(int yhbh, int checkBh, String status,
+	public boolean confirmCheckStatus(int yhbh, int checkBh, String status,
 			String qrsj) {
-		String sql = "update hg_check set ck_zxra_qrsj = ?, ck_zxra_status = ? where ck_zxra_yhbh = ? and ck_bh = ?";
+		String sql = "update hg_ck_yh set qrsj = ?, status = ? where yhbh = ? and ckbh = ?";
 		Query query = getMySession().createSQLQuery(sql);
 		query.setString(0, qrsj);
 		query.setString(1, status);
@@ -157,9 +151,9 @@ public class CheckDaoHibernate extends BaseHibernateDAO implements CheckDao {
 	}
 
 	@Override
-	public boolean finishACheckStatus(int yhbh, int checkBh, String status,
+	public boolean finishCheckStatus(int yhbh, int checkBh, String status,
 			String wcsj) {
-		String sql = "update hg_check set ck_zxra_wcsj = ?, ck_zxra_status = ? where ck_zxra_yhbh = ? and ck_bh = ?";
+		String sql = "update hg_ck_yh set wcsj = ?, status = ? where yhbh = ? and ckbh = ?";
 		Query query = getMySession().createSQLQuery(sql);
 		query.setString(0, wcsj);
 		query.setString(1, status);
@@ -169,55 +163,34 @@ public class CheckDaoHibernate extends BaseHibernateDAO implements CheckDao {
 	}
 
 	@Override
-	public boolean confirmBCheckStatus(int yhbh, int checkBh, String status,
-			String qrsj) {
-		String sql = "update hg_check set ck_zxrb_qrsj = ?, ck_zxrb_status = ? where ck_zxrb_yhbh = ? and ck_bh = ?";
-		Query query = getMySession().createSQLQuery(sql);
-		query.setString(0, qrsj);
-		query.setString(1, status);
-		query.setInteger(2, yhbh);
-		query.setInteger(3, checkBh);
-		return query.executeUpdate() == 1;
-	}
-
-	@Override
-	public boolean finishBCheckStatus(int yhbh, int checkBh, String status,
-			String wcsj) {
-		String sql = "update hg_check set ck_zxrb_wcsj = ?, ck_zxrb_status = ? where ck_zxrb_yhbh = ? and ck_bh = ?";
-		Query query = getMySession().createSQLQuery(sql);
-		query.setString(0, wcsj);
-		query.setString(1, status);
-		query.setInteger(2, yhbh);
-		query.setInteger(3, checkBh);
-		return query.executeUpdate() == 1;
-	}
-
-	@Override
-	public List<userCheckModel> getCheckAListByYhAndStatus(int yhbh, int cd,
+	public List<userCheckModel> getCheckListByYhAndStatus(int yhbh, int cd,
 			int ywlb, int jcyq, String startScsj, String endScsj,
 			String startWcsj, String endWcsj) {
 		Query query;
-		String sql = "select * from hg_check where ck_scsj > ? and ck_scsj < ? and ck_zxra_wcsj > ? and ck_zxra_wcsj < ? and ck_zxra_status = '已完成'";
+		String sql = "select A.ck_bh, A.ck_cdlb, A.ck_jcyq, A.ck_ywlb, A.ck_scsj, A.ck_scr_yhbh, A.ck_scr_yhbh, B.yhbh, B.yhbh, "
+				+ " B.qrsj, B.wcsj from hg_check A, hg_ck_yh B, pub_xtglyhb C, pub_xtglyhb D "
+				+ " where A.ck_scsj > ? and A.ck_scsj < ? and B.wcsj > ? and B.wcsj < ? and B.status = '已完成' "
+				+ " and A.ck_scr_yhbh = C.yhbh and A.ck_bh = B.ckbh and B.yhbh = D.yhbh";
 		List<Integer> obj = new ArrayList<Integer>();
 
 		if (yhbh > 0) {
 			obj.add(yhbh);
-			sql += " and ck_zxra_yhbh = ?";
+			sql += " and B.yhbh = ? ";
 		}
 
 		if (cd > 0) {
 			obj.add(cd);
-			sql += " and ck_cdlb = ?";
+			sql += " and A.ck_cdlb = ?";
 		}
 
 		if (ywlb > 0) {
 			obj.add(ywlb);
-			sql += " and ck_ywlb = ?";
+			sql += " and A.ck_ywlb = ?";
 		}
 
 		if (jcyq > 0) {
 			obj.add(jcyq);
-			sql += " and ck_jcyq = ?";
+			sql += " and A.ck_jcyq = ?";
 		}
 		query = getMySession().createSQLQuery(sql);
 		query.setString(0, startScsj);
@@ -235,10 +208,11 @@ public class CheckDaoHibernate extends BaseHibernateDAO implements CheckDao {
 			model.setCd((int) oa[1]);
 			model.setJcyq((int) oa[2]);
 			model.setYwlb((int) oa[3]);
-			model.setScr_name((String) oa[6]);
+			model.setScr_bh((int) oa[5]);
+			//model.setScr_name((String) oa[6]);
 			model.setScsj(DateFormatUtil.getFormatTimeStringChn((Date) oa[4]));
 			model.setCheckId((int) oa[0]);
-			model.setZxr_name((String) oa[8]);
+			//model.setZxr_name((String) oa[8]);
 			model.setZxr_qrsj(DateFormatUtil
 					.getFormatTimeStringChn((Date) oa[9]));
 			model.setZxr_wcsj(DateFormatUtil
@@ -250,59 +224,9 @@ public class CheckDaoHibernate extends BaseHibernateDAO implements CheckDao {
 	}
 
 	@Override
-	public List<userCheckModel> getCheckBListByYhAndStatus(int yhbh, int cd,
-			int ywlb, int jcyq, String startScsj, String endScsj,
-			String startWcsj, String endWcsj) {
-		Query query;
-		String sql = "select * from hg_check where ck_scsj > ? and ck_scsj < ? and ck_zxrb_wcsj > ? and ck_zxrb_wcsj < ? and ck_zxrb_status = '已完成'";
-		List<Integer> obj = new ArrayList<Integer>();
-
-		if (yhbh > 0) {
-			obj.add(yhbh);
-			sql += " and ck_zxrb_yhbh = ?";
-		}
-
-		if (cd > 0) {
-			obj.add(cd);
-			sql += " and ck_cdlb = ?";
-		}
-
-		if (ywlb > 0) {
-			obj.add(ywlb);
-			sql += " and ck_ywlb = ?";
-		}
-
-		if (jcyq > 0) {
-			obj.add(jcyq);
-			sql += " and ck_jcyq = ?";
-		}
-		query = getMySession().createSQLQuery(sql);
-		query.setString(0, startScsj);
-		query.setString(1, endScsj);
-		query.setString(2, startWcsj);
-		query.setString(3, endWcsj);
-		for (int i = 0; i < obj.size(); i++) {
-			query.setInteger(i + 4, obj.get(i));
-		}
-		@SuppressWarnings("unchecked")
-		List<Object[]> reList = query.list();
-		List<userCheckModel> modelList = new ArrayList<userCheckModel>();
-		for (Object[] oa : reList) {
-			userCheckModel model = new userCheckModel();
-			model.setCd((int) oa[1]);
-			model.setJcyq((int) oa[2]);
-			model.setYwlb((int) oa[3]);
-			model.setScr_name((String) oa[6]);
-			model.setScsj(DateFormatUtil.getFormatTimeStringChn((Date) oa[4]));
-			model.setCheckId((int) oa[0]);
-			model.setZxr_name((String) oa[12]);
-			model.setZxr_qrsj(DateFormatUtil
-					.getFormatTimeStringChn((Date) oa[13]));
-			model.setZxr_wcsj(DateFormatUtil
-					.getFormatTimeStringChn((Date) oa[14]));
-			model.setZxr_yhbh((int) oa[11]);
-			modelList.add(model);
-		}
-		return modelList;
+	public int getMaxCheckId() {
+		String sql = "select MAX(ck_bh) from hg_check";
+		Query query = getMySession().createSQLQuery(sql);
+		return (int) query.list().get(0);
 	}
 }

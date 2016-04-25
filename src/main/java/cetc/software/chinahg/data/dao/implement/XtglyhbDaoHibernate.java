@@ -147,8 +147,8 @@ public class XtglyhbDaoHibernate extends BaseHibernateDAO implements XtglyhbDao 
 		String sql = "insert into pub_xtglyhb(yhdm, yhmc, yhkl, permission, yh_duty, yh_jobNum) values(?,?,?,?,?,?)";
 		Query query = getMySession().createSQLQuery(sql);
 		query.setString(0, yhdm);
-		query.setString(1, yhkl);
-		query.setString(2, yhmc);
+		query.setString(1, yhmc);
+		query.setString(2, yhkl);
 		query.setInteger(3, permission);
 		query.setString(4, yh_duty);
 		query.setString(5, yh_jobNum);

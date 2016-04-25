@@ -181,7 +181,7 @@
 													</div>
 												</div>
 											</div>
-											<small>已完成： <span>${sessionScope.hasFinished}</span>件</small>
+											<small>已完成： <span>${sessionScope.hasFinishedNum}</span>件</small>
 											<div class="progress bk-margin-off-bottom"
 												style="height: 8px;">
 												<div class="progress thin progress-striped active">

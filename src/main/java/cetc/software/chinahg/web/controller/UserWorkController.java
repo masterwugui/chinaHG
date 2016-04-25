@@ -67,7 +67,7 @@ public class UserWorkController implements Serializable {
 		session.setAttribute("notStarted", notStarted);
 		session.setAttribute("notFinished", notFinished);
 		session.setAttribute("notFinished1", notFinished1);
-		session.setAttribute("hasFinished", hasFinished);
+		session.setAttribute("hasFinishedNum", hasFinished);
 		
 		return mav;
 	}
@@ -84,7 +84,7 @@ public class UserWorkController implements Serializable {
 		int notStarted = (int) session.getAttribute("notStarted");
 		int notFinished = (int) session.getAttribute("notFinished");
 		int notFinished1 = (int) session.getAttribute("notFinished1");
-		int hasFinishedNum = (int) session.getAttribute("hasFinished");
+		int hasFinishedNum = (int) session.getAttribute("hasFinishedNum");
 		
 		String qrsj = new SimpleDateFormat("yyyyMMddHHmmss").format(new Date());
 		String statusStr = "";
@@ -102,7 +102,7 @@ public class UserWorkController implements Serializable {
 			hasFinishedNum++;
 			session.setAttribute("notFinished", notFinished);
 			session.setAttribute("notFinished1", notFinished1);
-			session.setAttribute("hasFinished", hasFinished);
+			session.setAttribute("hasFinishedNum", hasFinishedNum);
 		}
 		userCheckModel model = userService.updateCheckStatus(checkId, yhbh,
 				statusStr, qrsj);

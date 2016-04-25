@@ -9,6 +9,6 @@ public interface UserService {
 	List<userCheckModel> getCheckListByYhAndStatus(int yhbh, String status);
 	
 	userCheckModel updateCheckStatus(int check_bh, int yhbh, String status, String qrsj);
-	
-	userCheckModel getUserCheckInfoByUserBhAndCheckBh(int yhbh, int ck_bh);
+
+	userCheckModel getUserCheckInfoByUserBhAndCheckBh(int yhbh, int checkId);
 }

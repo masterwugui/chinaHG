@@ -128,7 +128,7 @@
 				</div>
 				<!-- End Page Header -->
 				<div class="row">
-					<div class="col-lg-10 col-md-12 col-sm-12 col-xs-12">
+					<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 						<div class="panel panel-default bk-bg-white">
 							<div class="panel-heading bk-bg-white">
 								<h6>
@@ -188,7 +188,7 @@
 					</div>
 				</div>
 				<div class="row">
-					<div class="col-lg-10 col-md-12 col-sm-12 col-xs-12">
+					<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 						<div class="panel panel-default bk-bg-white">
 							<div class="panel-heading bk-bg-white">
 								<h6>
