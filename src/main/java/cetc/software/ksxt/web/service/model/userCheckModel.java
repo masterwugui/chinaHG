@@ -14,6 +14,13 @@ public class userCheckModel {
 	String zxr_qrsj;
 	String zxr_wcsj;
 	String scr_name;
+	String clyj;
+	public String getClyj() {
+		return clyj;
+	}
+	public void setClyj(String clyj) {
+		this.clyj = clyj;
+	}
 	int scr_bh;
 	public int getScr_bh() {
 		return scr_bh;

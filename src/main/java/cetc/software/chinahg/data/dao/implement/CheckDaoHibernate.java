@@ -85,7 +85,7 @@ public class CheckDaoHibernate extends BaseHibernateDAO implements CheckDao {
 	@Override
 	public userCheckModel getCheckByCheckBhAndYhbh(int yhbh, int ck_bh) {
 		String sql = "select A.ck_bh, A.ck_cdlb, A.ck_jcyq, A.ck_ywlb, A.ck_scsj, A.ck_scr_yhbh, C.yhmc, B.yhbh, D.yhmc, "
-				+ "B.qrsj, B.wcsj from hg_check A, hg_ck_yh B, pub_xtglyhb C, pub_xtglyhb D "
+				+ "B.qrsj, B.wcsj, B.clyj from hg_check A, hg_ck_yh B, pub_xtglyhb C, pub_xtglyhb D "
 				+ " where B.yhbh = ? and B.ckbh = ? and A.ck_bh = B.ckbh and A.ck_scr_yhbh = C.yhbh and B.yhbh = D.yhbh";
 		;
 		Query query = getMySession().createSQLQuery(sql);
@@ -103,6 +103,7 @@ public class CheckDaoHibernate extends BaseHibernateDAO implements CheckDao {
 		model.setZxr_name((String) oa[8]);
 		model.setZxr_qrsj(DateFormatUtil.getFormatTimeStringChn((Date) oa[9]));
 		model.setZxr_wcsj(DateFormatUtil.getFormatTimeStringChn((Date) oa[10]));
+		model.setClyj((String) oa[11]);
 		return model;
 	}
 
@@ -152,13 +153,14 @@ public class CheckDaoHibernate extends BaseHibernateDAO implements CheckDao {
 
 	@Override
 	public boolean finishCheckStatus(int yhbh, int checkBh, String status,
-			String wcsj) {
-		String sql = "update hg_ck_yh set wcsj = ?, status = ? where yhbh = ? and ckbh = ?";
+			String wcsj, String clyj) {
+		String sql = "update hg_ck_yh set wcsj = ?, status = ?, clyj=? where yhbh = ? and ckbh = ?";
 		Query query = getMySession().createSQLQuery(sql);
 		query.setString(0, wcsj);
 		query.setString(1, status);
-		query.setInteger(2, yhbh);
-		query.setInteger(3, checkBh);
+		query.setInteger(3, yhbh);
+		query.setInteger(4, checkBh);
+		query.setString(2, clyj);
 		return query.executeUpdate() == 1;
 	}
 

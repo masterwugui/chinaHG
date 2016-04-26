@@ -54,12 +54,12 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public userCheckModel updateCheckStatus(int check_bh, int yhbh,
-			String status, String qrsj) {
+			String status, String qrsj, String clyj) {
 		
 		if (status.equals("已确认")) {
 			checkDao.confirmCheckStatus(yhbh, check_bh, status, qrsj);
 		} else if (status.equals("已完成")) {
-			checkDao.finishCheckStatus(yhbh, check_bh, status, qrsj);
+			checkDao.finishCheckStatus(yhbh, check_bh, status, qrsj, clyj);
 		}
 		
 		userCheckModel remodel = checkDao.getCheckByCheckBhAndYhbh(yhbh, check_bh);

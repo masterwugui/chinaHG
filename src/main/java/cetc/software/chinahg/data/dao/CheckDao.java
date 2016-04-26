@@ -34,6 +34,6 @@ public interface CheckDao {
 	boolean confirmCheckStatus(int yhbh, int checkBh, String status,
 			String qrsj);
 
-	boolean finishCheckStatus(int yhbh, int checkBh, String status, String wcsj);
+	boolean finishCheckStatus(int yhbh, int checkBh, String status, String wcsj, String clyj);
 
 }

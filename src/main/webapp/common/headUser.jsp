@@ -16,6 +16,43 @@
 			</div>
 			<!-- Navbar Right -->
 			<div class="navbar-right">
+				<!-- Notifications -->
+				<ul class="notifications hidden-xs hidden">
+					<li><a href="#" class="dropdown-toggle notification-icon"
+						data-toggle="dropdown"> <i class="fa fa-bell"></i> <span
+							class="badge">3</span>
+					</a>
+						<ul class="dropdown-menu list-group">
+							<li class="dropdown-menu-header"><strong>执行中任务</strong>
+								<div class="progress progress-xs  progress-striped active">
+									<div class="progress-bar progress-bar-danger"
+										role="progressbar" aria-valuenow="60" aria-valuemin="0"
+										aria-valuemax="100" style="width: 60%;">60%</div>
+								</div></li>
+							<li class="list-item"><a href="page-inbox.html">
+									<div class="pull-left">
+										<i class="fa fa-envelope-o bk-fg-primary"></i>
+									</div>
+									<div class="media-body clearfix">
+										<div>抽检任务一</div>
+										<h6>未确认</h6>
+									</div>
+							</a></li>
+							<li class="list-item"><a href="#">
+									<div class="pull-left">
+										<i class="fa fa-cogs bk-fg-primary"></i>
+									</div>
+									<div class="media-body clearfix">
+										<div>抽检任务二</div>
+										<h6>执行中</h6>
+									</div>
+							</a></li>
+							<li class="list-item-last"><a href="#">
+									<h6>未读任务</h6> <span class="badge">2</span>
+							</a></li>
+						</ul></li>
+				</ul>
+				<!-- End Notifications -->
 				<!-- Userbox -->
 				<div class="userbox">
 					<a href="#" class="dropdown-toggle" data-toggle="dropdown">
@@ -36,9 +73,7 @@
 										aria-valuemax="100" style="width: 60%;">60%</div>
 								</div>
 							</li>
-							<li><a href="toManageHome.do"><i class="fa fa-anchor"></i> 现场派单</a></li>
-							<li><a href="toCheckSearch.do"><i class="fa fa-search"></i> 派单查询</a></li>
-							<li><a href="toSettings.do"><i class="fa fa-cog"></i> 参数维护</a></li>
+							<li><a href="toWork.do"><i class="fa fa-wrench"></i> 作业情况</a></li>
 							<li><a href="index.do"><i class="fa fa-power-off"></i>
 									登出</a></li>
 						</ul>

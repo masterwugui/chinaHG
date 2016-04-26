@@ -72,7 +72,7 @@
 						<div class="timelineProfile timeline-profile">
 							<div class="timeline-body">
 								<div class="timeline-title">
-									<h5 class="text-uppercase">执行情况时间轴</h5>
+									<h4 class="text-uppercase" style="margin-top: 4px;">执行情况时间轴</h4>
 								</div>
 								<ol class="timeline-items">
 									<li>
@@ -113,7 +113,7 @@
 	</div>
 	<!-- Modal Animation End-->
 	<!-- Start: Header -->
-	<jsp:include page="/common/head.jsp"></jsp:include>
+	<jsp:include page="/common/headUser.jsp"></jsp:include>
 	<!-- End: Header -->
 
 	<!-- Start: Content -->
@@ -152,14 +152,16 @@
 												<img src="assets/img/avatar.jpg" alt=""
 													class="img-circle bk-img-120 bk-border-light-gray bk-border-3x" />
 											</div>
-											<h4 class="bk-margin-top-10 bk-docs-font-weight-300"> ${sessionScope.yhmc}</h4>
+											<h4 class="bk-margin-top-10 bk-docs-font-weight-300">
+												${sessionScope.yhmc}</h4>
 										</div>
 										<hr class="bk-margin-off" />
 
 										<div
 											class="col-lg-12 col-md-12 col-sm-12 col-xs-12 text-left bk-vcenter text-center">
 											<hr class="bk-margin-off" />
-											<small>待确认：<span>${sessionScope.notStarted}</span>件</small>
+											<small>待确认：<span>${sessionScope.notStarted}</span>件
+											</small>
 											<div class="progress bk-margin-bottom-10"
 												style="height: 8px;">
 												<div class="progress thin progress-striped active">
@@ -170,7 +172,8 @@
 													</div>
 												</div>
 											</div>
-											<small>待执行：<span>${sessionScope.notFinished}</span>件</small>
+											<small>待执行：<span>${sessionScope.notFinished}</span>件
+											</small>
 											<div class="progress bk-margin-bottom-10"
 												style="height: 8px;">
 												<div class="progress thin progress-striped active">
@@ -181,7 +184,8 @@
 													</div>
 												</div>
 											</div>
-											<small>已完成： <span>${sessionScope.hasFinishedNum}</span>件</small>
+											<small>已完成： <span>${sessionScope.hasFinishedNum}</span>件
+											</small>
 											<div class="progress bk-margin-off-bottom"
 												style="height: 8px;">
 												<div class="progress thin progress-striped active">
@@ -532,6 +536,7 @@
 		var nRow = null;
 		var checkId;
 		var status;
+		var this_ywlb = 0;
 		//完成派单
 		$('#datatable-edit a.finishWork')
 				.live(
@@ -566,6 +571,15 @@
 													.append(item);
 											$('#modalAnim ol.timeline-items')
 													.append(confirmItem);
+											if (msg.checkModel.ywlb == 7) {
+												var confirmItem1 = "<li><div class='timeline-box'><div class='img-timeline'><textarea id='clyj-input' name='clyj-input' rows='9' class='form-control' placeholder='处理意见..'></textarea></div></div></li>";
+												$(
+														'#modalAnim ol.timeline-items')
+														.append(confirmItem1);
+												this_ywlb = 7;
+											} else {
+												this_ywlb = 0;
+											}
 										},
 										error : function(jqXHR, textStatus,
 												errorThrown) {
@@ -578,6 +592,7 @@
 						'click',
 						function(e) {
 							e.preventDefault();
+							this_ywlb = 0;
 							status = 2;
 							nRow = $(this).parents('tr')[0];
 							checkId = nRow.cells[0].innerHTML;
@@ -599,17 +614,26 @@
 											var confirmItem = "<li><div class='timeline-box'><p class='text-muted'>"
 													+ msg.checkModel.zxr_qrsj
 													+ "</p><p>确认派单 开始作业</p></div></li>";
-											var finishItem = "<li><div class='timeline-box'><p class='text-muted'>"
-													+ msg.checkModel.zxr_wcsj
-													+ "</p><p>完成作业</p></div></li>";
 											$('#modalAnim ol.timeline-items')
 													.empty();
 											$('#modalAnim ol.timeline-items')
 													.append(item);
 											$('#modalAnim ol.timeline-items')
 													.append(confirmItem);
+
+											if (msg.checkModel.ywlb == 7) {
+												var finishItem = "<li><div class='timeline-box'><p class='text-muted'>"
+														+ msg.checkModel.zxr_wcsj
+														+ "</p><p>完成作业</p><p>处理意见：</p><p>"
+														+ msg.checkModel.clyj
+														+ "</p></div></li>";
+											} else {
+												var finishItem = "<li><div class='timeline-box'><p class='text-muted'>"
+														+ msg.checkModel.zxr_wcsj
+														+ "</p><p>完成作业</p></div></li>";
+											}
 											$('#modalAnim ol.timeline-items')
-											.append(finishItem);
+													.append(finishItem);
 										},
 										error : function(jqXHR, textStatus,
 												errorThrown) {
@@ -622,6 +646,7 @@
 						'click',
 						function(e) {
 							e.preventDefault();
+							this_ywlb = 0;
 							status = 0;
 							nRow = $(this).parents('tr')[0];
 							var scr_name = nRow.cells[4].innerHTML;
@@ -676,6 +701,12 @@
 						'.modal-confirm',
 						function(e) {
 							e.preventDefault();
+							var clyj = "";
+							if (this_ywlb == 7) {
+								clyj = $('#modalAnim textarea#clyj-input')[0].value;
+							} else {
+								clyj = "";
+							}
 							$
 									.ajax({
 										url : "confirmCheck.json",
@@ -683,7 +714,8 @@
 										processData : true,// contentType为xml时，些值为false
 										data : {
 											checkId : checkId,
-											status : status
+											status : status,
+											clyj : clyj
 										},
 										dataType : "json",// json--返回json数据类型；xml--返回xml
 										success : function(msg) {
@@ -709,24 +741,26 @@
 																msg.checkModel.zxr_wcsj,
 																"<td><a class='checkWork modal-with-zoom-anim' href='javascript:;'>查看</a></td>" ]);
 											}
-											$('.modal-with-zoom-anim').magnificPopup({
-												items : {
-													src : '#modalAnim',
-													type : 'inline',
-												},
-												fixedContentPos : false,
-												fixedBgPos : true,
+											$('.modal-with-zoom-anim')
+													.magnificPopup(
+															{
+																items : {
+																	src : '#modalAnim',
+																	type : 'inline',
+																},
+																fixedContentPos : false,
+																fixedBgPos : true,
 
-												overflowY : 'auto',
+																overflowY : 'auto',
 
-												closeBtnInside : true,
-												preloader : false,
+																closeBtnInside : true,
+																preloader : false,
 
-												midClick : true,
-												removalDelay : 300,
-												mainClass : 'my-mfp-zoom-in',
-												modal : true
-											});
+																midClick : true,
+																removalDelay : 300,
+																mainClass : 'my-mfp-zoom-in',
+																modal : true
+															});
 										},
 										error : function(jqXHR, textStatus,
 												errorThrown) {

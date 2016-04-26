@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import cetc.software.chinahg.util.StringUtil;
 import cetc.software.chinahg.web.service.UserService;
 import cetc.software.ksxt.web.service.model.checkModel;
 import cetc.software.ksxt.web.service.model.userCheckModel;
@@ -76,7 +77,8 @@ public class UserWorkController implements Serializable {
 	public ModelAndView toWork(HttpServletRequest request,
 			HttpServletResponse response,
 			@RequestParam(value = "checkId", required = false) int checkId,
-			@RequestParam(value = "status", required = false) int status) {
+			@RequestParam(value = "status", required = false) int status,
+			@RequestParam(value = "clyj", required = false) String clyj) {
 		ModelAndView mav = new ModelAndView();
 		HttpSession session = request.getSession();
 		int yhbh = (int) session.getAttribute("userId");
@@ -105,7 +107,7 @@ public class UserWorkController implements Serializable {
 			session.setAttribute("hasFinishedNum", hasFinishedNum);
 		}
 		userCheckModel model = userService.updateCheckStatus(checkId, yhbh,
-				statusStr, qrsj);
+				statusStr, qrsj, StringUtil.getStrConvert(clyj));
 
 		mav.addObject("checkModel", model);
 
