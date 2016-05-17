@@ -19,8 +19,8 @@
 				<!-- Userbox -->
 				<div class="userbox">
 					<a href="#" class="dropdown-toggle" data-toggle="dropdown">
-						<figure class="profile-picture hidden-xs">
-							<img src="assets/img/avatar.jpg" class="img-circle" alt="" />
+						<figure class="profile-picture hidden-xs hidden">
+							<img src="assets/img/avatar.jpg" class="img-circle hidden" alt="" />
 						</figure>
 						<div class="profile-info">
 							<span class="name"> ${sessionScope.yhmc}</span> <span class="role"><i

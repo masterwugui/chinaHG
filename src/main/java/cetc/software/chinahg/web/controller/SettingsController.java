@@ -81,6 +81,15 @@ public class SettingsController implements Serializable {
 				StringUtil.getStrConvert(yh_jobNum), permisssion);
 	}
 	
+	@RequestMapping(value = "updateYhSelected.json")
+	public void updateYhSelected(
+			HttpServletRequest request,
+			HttpServletResponse response,
+			@RequestParam(value = "yhbh", required = true) int yhbh,
+			@RequestParam(value = "isSelected", required = true) int isSelected) {
+		xtglyhbService.updateUserSelected(yhbh,isSelected);
+	}
+	
 	@RequestMapping(value = "deleteYH.json")
 	public void deleteYH(
 			HttpServletRequest request,

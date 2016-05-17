@@ -143,8 +143,7 @@
 								<div class="form-group">
 									<label class="col-md-2 control-label">场地类别</label>
 									<div class="col-md-9">
-										<select id="cdlbSelect" class="m-wrap  form-control"
-											>
+										<select id="cdlbSelect" class="m-wrap  form-control">
 											<c:forEach items="${cdList}" var="cd">
 												<option value="${cd.DMBH}">${cd.DMMS}</option>
 											</c:forEach>
@@ -154,8 +153,7 @@
 								<div class="form-group">
 									<label class="col-md-2 control-label">业务类别</label>
 									<div class="col-md-9">
-										<select id="ywlbSelect" class="m-wrap  form-control"
-											>
+										<select id="ywlbSelect" class="m-wrap  form-control">
 											<c:forEach items="${ywList}" var="yw">
 												<option value="${yw.DMBH}">${yw.DMMS}</option>
 											</c:forEach>
@@ -165,8 +163,7 @@
 								<div class="form-group">
 									<label class="col-md-2 control-label">检查要求</label>
 									<div class="col-md-9">
-										<select id="jcyqSelect" class="m-wrap  form-control"
-											>
+										<select id="jcyqSelect" class="m-wrap  form-control">
 											<c:forEach items="${jcyqList}" var="jcyq">
 												<option value="${jcyq.DMBH}">${jcyq.DMMS}</option>
 											</c:forEach>
@@ -212,6 +209,7 @@
 											<th>作业人员一进度</th>
 											<th>作业人员二</th>
 											<th>作业人员二进度</th>
+											<th>操作</th>
 										</tr>
 									</thead>
 									<tbody>
@@ -224,6 +222,9 @@
 												<td>${model.zxra_status}</td>
 												<td>${model.zxrb_name}</td>
 												<td>${model.zxrb_status}</td>
+												<td class=""><a
+													onclick="removeCheck('${model.ck_bh}')"
+													class="on-default remove-row"><i class="fa fa-trash-o"></i></a></td>
 											</tr>
 										</c:forEach>
 									</tbody>
@@ -294,29 +295,55 @@
 	<script src="assets/js/pages/ui-modals.js"></script>
 	<!-- end: JavaScript-->
 	<script>
-		var oTable = $('#sample_editable_1').dataTable();
-		function cqUser() {
-			$.ajax({
-				url : "cqUser.json",
+		function removeCheck(checkId) {
+			$
+			.ajax({
+				url : "removeCheck.json",
 				contentType : "application/json",//application/xml  
 				processData : true,//contentType为xml时，些值为false  
 				data : {
-					cd : $("#cdlbSelect").val(),
-					ywlb : $("#ywlbSelect").val(),
-					jcyq : $("#jcyqSelect").val(),
+					checkId : checkId
 				},
 				dataType : "json",//json--返回json数据类型；xml--返回xml  
 				success : function(msg) {
-					oTable.fnAddData([ msg.checkModel.cdChn,
-							msg.checkModel.ywlbChn, msg.checkModel.jcyqChn,
-							msg.checkModel.zxra_name,
-							msg.checkModel.zxra_status,
-							msg.checkModel.zxrb_name,
-							msg.checkModel.zxrb_status ]);
+					window.location.href = "toManageHome.do";
 				},
 				error : function(jqXHR, textStatus, errorThrown) {
 				},
 			});
+		}
+		var oTable = $('#sample_editable_1').dataTable();
+		function delayCqUser() {
+			$
+					.ajax({
+						url : "cqUser.json",
+						contentType : "application/json",//application/xml  
+						processData : true,//contentType为xml时，些值为false  
+						data : {
+							cd : $("#cdlbSelect").val(),
+							ywlb : $("#ywlbSelect").val(),
+							jcyq : $("#jcyqSelect").val(),
+						},
+						dataType : "json",//json--返回json数据类型；xml--返回xml  
+						success : function(msg) {
+							oTable
+									.fnAddData([ msg.checkModel.cdChn,
+											msg.checkModel.ywlbChn,
+											msg.checkModel.jcyqChn,
+											msg.checkModel.zxra_name,
+											msg.checkModel.zxra_status,
+											msg.checkModel.zxrb_name,
+											msg.checkModel.zxrb_status,
+											"<a href='#' class='on-default remove-row' 	onclick='removeCheck("+msg.checkModel.ck_bh+")'><i class='fa fa-trash-o'></i></a>" ]);
+							$('.form-group a').removeAttr("disabled");
+						},
+						error : function(jqXHR, textStatus, errorThrown) {
+						},
+					});
+		}
+		function cqUser() {
+			$('.form-group a').attr("disabled", "disabled");
+			setTimeout("delayCqUser()", 2000);
 		}
 	</script>
 </body>

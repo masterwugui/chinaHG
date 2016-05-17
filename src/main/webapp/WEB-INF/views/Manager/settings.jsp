@@ -271,6 +271,7 @@
 											id="datatable-yh">
 											<thead>
 												<tr>
+													<th>是否可抽中</th>
 													<th>编号</th>
 													<th>姓名</th>
 													<th>用户名</th>
@@ -284,6 +285,7 @@
 											<tbody>
 												<c:forEach items="${userList}" var="user">
 													<tr>
+													<td><c:if test="${user.yh_isSelected==1}"><input type="checkbox" class='userSelected' checked="checked"/></c:if><c:if test="${user.yh_isSelected==0}"><input class='userSelected' type="checkbox"/></c:if></td>
 														<td>${user.yhbh}</td>
 														<td>${user.yhmc}</td>
 														<td>${user.yhdm}</td>

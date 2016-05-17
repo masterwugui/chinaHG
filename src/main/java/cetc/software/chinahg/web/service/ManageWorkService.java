@@ -13,5 +13,7 @@ public interface ManageWorkService {
 
 	List<userCheckModel> searchChecks(int yhbh, int cd, int ywlb, int jcyq,
 			String startScsj, String endScsj, String startWcsj, String endWcsj);
+	
+	boolean deleteCheck(int checkId);
 
 }

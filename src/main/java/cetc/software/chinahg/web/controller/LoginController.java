@@ -18,6 +18,7 @@ import org.springframework.web.servlet.ModelAndView;
 import cetc.software.chinahg.data.dao.DmbDao;
 import cetc.software.chinahg.data.dataobject.ExamDmb;
 import cetc.software.chinahg.data.dataobject.PubXtglYhb;
+import cetc.software.chinahg.util.StringUtil;
 import cetc.software.chinahg.web.service.ManageWorkService;
 import cetc.software.chinahg.web.service.XtglyhbService;
 import cetc.software.ksxt.web.service.model.checkModel;
@@ -58,7 +59,7 @@ public class LoginController implements Serializable {
 	public void setXtglyhbService(XtglyhbService xtglyhbService) {
 		this.xtglyhbService = xtglyhbService;
 	}
-	
+
 	private ManageWorkService manageWorkService;
 
 	public ManageWorkService getManageWorkService() {
@@ -69,7 +70,7 @@ public class LoginController implements Serializable {
 	public void setManageWorkService(ManageWorkService manageWorkService) {
 		this.manageWorkService = manageWorkService;
 	}
-	
+
 	@RequestMapping(value = "index.do")
 	public ModelAndView showLogin(HttpServletRequest request,
 			HttpServletResponse response, ModelMap model) {
@@ -88,10 +89,23 @@ public class LoginController implements Serializable {
 		mav.addObject("cdList", cdList1);
 		mav.addObject("ywList", ywist);
 		mav.addObject("jcyqList", jcyqList);
-		
+
 		List<checkModel> modelList = manageWorkService.getCheckList();
 		mav.addObject("modelList", modelList);
-		
+
+		return mav;
+	}
+
+	@RequestMapping(value = "toUserInfo.do")
+	public ModelAndView toUserInfo(HttpServletRequest request,
+			HttpServletResponse response, ModelMap model) {
+		ModelAndView mav = new ModelAndView("User/userInfo");
+
+		HttpSession session = request.getSession();
+		int yhbh = (int) session.getAttribute("userId");
+		zghgUserModel userModel = xtglyhbService.getUser(yhbh);
+
+		mav.addObject("userModel", userModel);
 		return mav;
 	}
 
@@ -100,14 +114,14 @@ public class LoginController implements Serializable {
 			HttpServletResponse response, ModelMap model) {
 		ModelAndView mav = new ModelAndView("Manager/settings");
 		List<zghgUserModel> userList = xtglyhbService.getUserList();
-		
+
 		List<ExamDmb> cdList1 = dmbDao.dmbList(CDLX1);
 		List<ExamDmb> ywist = dmbDao.dmbList(YWLB);
 		List<ExamDmb> jcyqList = dmbDao.dmbList(JCYQ);
 		mav.addObject("cdList", cdList1);
 		mav.addObject("ywList", ywist);
 		mav.addObject("jcyqList", jcyqList);
-		
+
 		mav.addObject("userList", userList);
 		return mav;
 	}
@@ -120,19 +134,31 @@ public class LoginController implements Serializable {
 			throws IOException {
 		ModelAndView mav = new ModelAndView();
 		HttpSession session = request.getSession();
+		yhkl = StringUtil.getStrConvert(yhkl);
 		PubXtglYhb pubXtglYhb = xtglyhbService.getXtglyhbByYhdmYhkl(yhdm, yhkl);
 		if (pubXtglYhb != null) {
-			int yhbh =pubXtglYhb.getYhbh();
+			int yhbh = pubXtglYhb.getYhbh();
 			session.setAttribute("yhmc", pubXtglYhb.getYhmc());
 			session.setAttribute("userId", yhbh);
 			zghgUserModel userModel = xtglyhbService.getUser(yhbh);
 			session.setAttribute("yhzw", userModel.getYh_duty());
 			session.setAttribute("yhJobNum", userModel.getYh_jobNum());
+			String permission = pubXtglYhb.getPermission();
+			mav.addObject("permission", permission);
 		} else {
 			System.out.println("fail to log in !");
 		}
-		String permission = pubXtglYhb.getPermission();
-		mav.addObject("permission", permission);
 		return mav;
+	}
+
+	@RequestMapping(value = "savePwd.json")
+	public void savePwd(HttpServletRequest request,
+			HttpServletResponse response,
+			@RequestParam(value = "pwd", required = true) String pwd)
+			throws IOException {
+		HttpSession session = request.getSession();
+		pwd = StringUtil.getStrConvert(pwd);
+		int yhbh = (int) session.getAttribute("userId");
+		xtglyhbService.updateUser(yhbh, pwd);
 	}
 }

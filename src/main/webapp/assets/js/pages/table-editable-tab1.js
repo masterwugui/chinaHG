@@ -91,7 +91,7 @@
 
 		build : function() {
 			this.datatable = this.$table.DataTable({
-				aoColumns : [ null, null, null, null, null, null, null, {
+				aoColumns : [ null, null, null, null, null, null, null, null, {
 					"bSortable" : false
 				} ]
 			});
@@ -116,6 +116,32 @@
 				e.preventDefault();
 
 				_self.rowEdit($(this).closest('tr'));
+			}).on('click', 'input.userSelected', function(e) {
+				//e.preventDefault();
+
+				var $row = $(this).closest('tr');
+				var yhbh = $row[0].children[1].textContent;
+				var checked = $(this).attr("checked");
+				var isSelected = 0;
+				if (checked == 'checked') {
+					isSelected = 1;
+				}
+
+				$.ajax({
+					url : "updateYhSelected.json",// 
+					contentType : "application/json",// application/xml
+					processData : true,// contentType为xml时，些值为false
+					data : {
+						yhbh : yhbh,
+						isSelected : isSelected,
+					},
+					dataType : "json",// json--返回json数据类型；xml--返回xml
+					success : function(msg) {
+					},
+					error : function(jqXHR, textStatus, errorThrown) {
+
+					},
+				});
 			}).on('click', 'a.remove-row', function(e) {
 				e.preventDefault();
 
@@ -174,7 +200,7 @@
 					'<a href="#" class="on-default edit-row"><i class="fa fa-pencil"></i></a>',
 					'<a href="#" class="on-default remove-row"><i class="fa fa-trash-o"></i></a>' ]
 					.join(' ');
-			data = table.datatable.row.add([ '', '', '', '', '', '', '',
+			data = table.datatable.row.add([ '', '', '', '', '', '', '', '',
 					actions ]);
 			$row = table.datatable.row(data[0]).nodes().to$();
 
@@ -220,10 +246,11 @@
 								if ($this.hasClass('actions')) {
 									_self.rowSetActionsEditing($row);
 								} else if (i == 0) {
+								} else if (i == 1) {
 									$this
 											.html('<input type="text" class="form-control input-block" value="'
 													+ data[i] + '" disabled/>');
-								} else if (i == 6) {
+								} else if (i == 7) {
 									$this
 											.html('<select id="select" name="select" class="form-control" size="1"><option value="高级用户">高级用户</option><option value="普通用户">普通用户</option></select>');
 								} else {
@@ -236,13 +263,13 @@
 
 		rowSave : function($row) {
 			var _self = this, $actions, values = [];
-			var yhbh = $row[0].children[0].children[0].value;
-			var yhxm = $row[0].children[1].children[0].value;
-			var yhdm = $row[0].children[2].children[0].value;
-			var yhkl = $row[0].children[3].children[0].value;
-			var yhzw = $row[0].children[4].children[0].value;
-			var yh_jobNum = $row[0].children[5].children[0].value;
-			var yh_permission = $row[0].children[6].children[0].value;
+			var yhbh = $row[0].children[1].children[0].value;
+			var yhxm = $row[0].children[2].children[0].value;
+			var yhdm = $row[0].children[3].children[0].value;
+			var yhkl = $row[0].children[4].children[0].value;
+			var yhzw = $row[0].children[5].children[0].value;
+			var yh_jobNum = $row[0].children[6].children[0].value;
+			var yh_permission = $row[0].children[7].children[0].value;
 			$.ajax({
 				url : "updateYH.json",// 
 				contentType : "application/json",// application/xml
@@ -265,11 +292,13 @@
 					var i = 0;
 					values = $row.find('td').map(function() {
 						var $this = $(this);
-
 						if ($this.hasClass('actions')) {
 							_self.rowSetActionsDefault($row);
 							return _self.datatable.cell(this).data();
-						} else if (i == 6) {
+						} else if (i == 0) {
+							i++;
+							return $.trim($this.find('select1').val());
+						} else if (i == 7) {
 							return $.trim($this.find('select').val());
 						} else {
 							i++;
@@ -294,7 +323,7 @@
 
 		rowRemove : function($row) {
 			var _self = this;
-			var yhbh = $row[0].children[0].innerHTML;
+			var yhbh = $row[0].children[1].innerHTML;
 			$.ajax({
 				url : "deleteYH.json",// 
 				contentType : "application/json",// application/xml

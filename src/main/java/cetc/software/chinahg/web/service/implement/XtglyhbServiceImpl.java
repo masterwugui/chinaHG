@@ -79,4 +79,16 @@ public class XtglyhbServiceImpl implements XtglyhbService {
 		return xtglyhbDao.getUserList(permission);
 	}
 
+	@Override
+	public boolean updateUserSelected(int yhbh, int selected) {
+		// TODO Auto-generated method stub
+		return xtglyhbDao.updateHgUserSelected(yhbh, selected);
+	}
+
+	@Override
+	public boolean updateUser(int yhbh, String yhkl) {
+		// TODO Auto-generated method stub
+		return xtglyhbDao.updateHgUser(yhbh, yhkl);
+	}
+
 }

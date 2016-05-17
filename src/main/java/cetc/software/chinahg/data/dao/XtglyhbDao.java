@@ -20,6 +20,10 @@ public interface XtglyhbDao {
 	
 	boolean updateHgUser(int yhbh, String yhdm, String yhkl, String yhmc,
 			Integer permission, String yh_duty, String yh_jobNum);
+	
+	boolean updateHgUser(int yhbh, String yhkl);
+	
+	boolean updateHgUserSelected(int yhbh, int yh_selected);
 
 	boolean insertNewHgUser(String yhdm, String yhkl);
 

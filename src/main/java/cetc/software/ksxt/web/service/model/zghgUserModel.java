@@ -10,9 +10,16 @@ public class zghgUserModel {
 	String yh_jobNum;
 	String yh_lineNum;
 	String yh_phoneNum;
+	public int getYh_isSelected() {
+		return yh_isSelected;
+	}
+	public void setYh_isSelected(int yh_isSelected) {
+		this.yh_isSelected = yh_isSelected;
+	}
 	String yh_email;
 	String yh_address;
 	String perChn;
+	int yh_isSelected;
 	public String getPerChn() {
 		return perChn;
 	}

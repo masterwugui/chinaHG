@@ -165,6 +165,15 @@ public class CheckDaoHibernate extends BaseHibernateDAO implements CheckDao {
 	}
 
 	@Override
+	public boolean updateYhStatus(int yhbh, int status) {
+		String sql = "update pub_xtglyhb set yh_status = ? where yhbh = ?";
+		Query query = getMySession().createSQLQuery(sql);
+		query.setInteger(0, status);
+		query.setInteger(1, yhbh);
+		return query.executeUpdate() == 1;
+	}
+
+	@Override
 	public List<userCheckModel> getCheckListByYhAndStatus(int yhbh, int cd,
 			int ywlb, int jcyq, String startScsj, String endScsj,
 			String startWcsj, String endWcsj) {
@@ -211,10 +220,10 @@ public class CheckDaoHibernate extends BaseHibernateDAO implements CheckDao {
 			model.setJcyq((int) oa[2]);
 			model.setYwlb((int) oa[3]);
 			model.setScr_bh((int) oa[5]);
-			//model.setScr_name((String) oa[6]);
+			// model.setScr_name((String) oa[6]);
 			model.setScsj(DateFormatUtil.getFormatTimeStringChn((Date) oa[4]));
 			model.setCheckId((int) oa[0]);
-			//model.setZxr_name((String) oa[8]);
+			// model.setZxr_name((String) oa[8]);
 			model.setZxr_qrsj(DateFormatUtil
 					.getFormatTimeStringChn((Date) oa[9]));
 			model.setZxr_wcsj(DateFormatUtil
@@ -230,5 +239,30 @@ public class CheckDaoHibernate extends BaseHibernateDAO implements CheckDao {
 		String sql = "select MAX(ck_bh) from hg_check";
 		Query query = getMySession().createSQLQuery(sql);
 		return (int) query.list().get(0);
+	}
+
+	@Override
+	public boolean deleteCheck(int checkId) {
+		String sql = "delete from hg_check where ck_bh = ?";
+		Query query = getMySession().createSQLQuery(sql);
+		query.setInteger(0, checkId);
+		return query.executeUpdate() == 1;
+	}
+
+	@Override
+	public boolean deleteCheckYh(int checkId) {
+		String sql = "delete from hg_ck_yh where ckbh = ?";
+		Query query = getMySession().createSQLQuery(sql);
+		query.setInteger(0, checkId);
+		return query.executeUpdate() > 1;
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Integer> getYhByCheckId(int checkId) {
+		String sql = "select yhbh from hg_ck_yh where ckbh = ?";
+		Query query = getMySession().createSQLQuery(sql);
+		query.setInteger(0, checkId);
+		return query.list();
 	}
 }

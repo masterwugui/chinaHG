@@ -74,7 +74,7 @@ public class XtglyhbDaoHibernate extends BaseHibernateDAO implements XtglyhbDao 
 
 	@Override
 	public List<zghgUserModel> getUserList() {
-		String sql = "select yhbh, yhdm, yhmc, yhkl, permission, yh_duty, yh_jobNum, yh_lineNum, yh_phoneNum, yh_email, yh_address from pub_xtglyhb where permission <> 3";
+		String sql = "select yhbh, yhdm, yhmc, yhkl, permission, yh_duty, yh_jobNum, yh_lineNum, yh_phoneNum, yh_email, yh_address, yh_isSelected from pub_xtglyhb where permission <> 3";
 		Query query = getMySession().createSQLQuery(sql);
 		@SuppressWarnings("unchecked")
 		List<Object[]> reList = query.list();
@@ -92,6 +92,7 @@ public class XtglyhbDaoHibernate extends BaseHibernateDAO implements XtglyhbDao 
 			model.setYh_phoneNum((String) oa[8]);
 			model.setYh_email((String) oa[9]);
 			model.setYh_address((String) oa[10]);
+			model.setYh_isSelected((int) oa[11]);
 			if (model.getPermission().equals("1")) {
 				model.setPerChn("高级用户");
 			} else {
@@ -113,7 +114,7 @@ public class XtglyhbDaoHibernate extends BaseHibernateDAO implements XtglyhbDao 
 
 	@Override
 	public List<Integer> getUserToBeChooseList() {
-		String sql = "select yhbh from pub_xtglyhb where permission = 2";
+		String sql = "select yhbh from pub_xtglyhb where permission = 2 and yh_isSelected = 1 and yh_status = 0";
 		Query query = getMySession().createSQLQuery(sql);
 		@SuppressWarnings("unchecked")
 		List<Integer> reList = query.list();
@@ -169,7 +170,16 @@ public class XtglyhbDaoHibernate extends BaseHibernateDAO implements XtglyhbDao 
 		query.setInteger(6, yhbh);
 		return query.executeUpdate() == 1;
 	}
-
+	
+	@Override
+	public boolean updateHgUserSelected(int yhbh, int yh_selected) {
+		String sql = "update pub_xtglyhb set yh_isSelected=? where yhbh=?";
+		Query query = getMySession().createSQLQuery(sql);
+		query.setInteger(0, yh_selected);
+		query.setInteger(1, yhbh);
+		return query.executeUpdate() == 1;
+	}
+	
 	@Override
 	public List<zghgUserModel> getUserList(int permission) {
 		String sql = "select yhbh, yhdm, yhmc, yhkl, permission, yh_duty, yh_jobNum, yh_lineNum, yh_phoneNum, yh_email, yh_address from pub_xtglyhb where permission = ?";
@@ -199,6 +209,15 @@ public class XtglyhbDaoHibernate extends BaseHibernateDAO implements XtglyhbDao 
 			modelList.add(model);
 		}
 		return modelList;
+	}
+
+	@Override
+	public boolean updateHgUser(int yhbh, String yhkl) {
+		String sql = "update pub_xtglyhb set yhkl=? where yhbh=?";
+		Query query = getMySession().createSQLQuery(sql);
+		query.setString(0, yhkl);
+		query.setInteger(1, yhbh);
+		return query.executeUpdate() == 1;
 	}
 
 }

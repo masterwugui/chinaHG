@@ -270,7 +270,7 @@
 									</div>
 								</div>
 								<hr class="bk-margin-off" />
-								<div class="bk-ltr bk-bg-white">
+								<div class="bk-ltr bk-bg-white hidden">
 									<div class="row">
 										<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 											<div
@@ -295,7 +295,7 @@
 										</div>
 									</div>
 								</div>
-								<div class="bk-ltr bk-padding-bottom-20 bk-padding-left-20">
+								<div class="bk-ltr bk-padding-bottom-20 bk-padding-left-20 hidden">
 									<div class="row">
 										<div
 											class="col-12-4 col-md-12 col-sm-12 col-xs-12 bk-bg-white bk-padding-top-10">

@@ -20,6 +20,9 @@
 							class="pull-right label label-danger">${sessionScope.notFinished1}</span> <i
 							class="fa fa-envelope" aria-hidden="true"></i><span>作业情况</span>
 					</a></li>
+					<li><a href="toUserInfo.do"><i
+							class="fa fa-user" aria-hidden="true"></i><span>个人信息</span>
+					</a></li>
 				</ul>
 			</nav>
 		</div>

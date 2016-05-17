@@ -17,6 +17,10 @@ public interface CheckDao {
 	boolean insertNewCheck(int ck_cdlb, int ck_ywlb, int ck_jcyq,
 			String ck_scsj, int ck_scr);
 	
+	boolean deleteCheck(int checkId);
+	
+	boolean deleteCheckYh(int checkId);
+	
 	int getMaxCheckId();
 	
 	boolean insertNewCheckYH(int ckbh, int yhbh, String status);
@@ -36,4 +40,7 @@ public interface CheckDao {
 
 	boolean finishCheckStatus(int yhbh, int checkBh, String status, String wcsj, String clyj);
 
+	boolean updateYhStatus(int yhbh, int status);
+
+	List<Integer> getYhByCheckId(int checkId);
 }

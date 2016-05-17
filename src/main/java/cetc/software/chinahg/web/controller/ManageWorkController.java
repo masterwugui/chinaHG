@@ -124,6 +124,14 @@ public class ManageWorkController implements Serializable {
 		return mav;
 	}
 	
+	@RequestMapping(value = "removeCheck.json")
+	public void removeCheck(
+			HttpServletRequest request,
+			HttpServletResponse response,
+			@RequestParam(value = "checkId", required = true) int checkId) {
+		manageWorkService.deleteCheck(checkId);
+	}
+	
 	@RequestMapping(value = "printSearchResult.do", method = RequestMethod.GET)
 	public void printSearchResult(HttpServletRequest request,
 			HttpServletResponse response) {

@@ -69,6 +69,7 @@ public class ManageWorkServiceImpl implements ManageWorkService {
 		zghgUserModel zxrB = modelList.get(1);
 
 		String NotStarted = "未开始";
+		int hasBeenSelected = 1;
 		// aborted
 		// checkDao.insertNewCheck(cd, ywlb, jcyq, NotStarted, NotStarted, scsj,
 		// zxrA.getYhbh(), zxrA.getYhmc(), zxrB.getYhbh(), zxrB.getYhmc(),
@@ -78,8 +79,12 @@ public class ManageWorkServiceImpl implements ManageWorkService {
 		int checkId = checkDao.getMaxCheckId();
 		checkDao.insertNewCheckYH(checkId, zxrA.getYhbh(), NotStarted);
 		checkDao.insertNewCheckYH(checkId, zxrB.getYhbh(), NotStarted);
+		checkDao.updateYhStatus(zxrA.getYhbh(), hasBeenSelected);
+		checkDao.updateYhStatus(zxrB.getYhbh(), hasBeenSelected);
+		
 
 		checkModel model = new checkModel();
+		model.setCk_bh(checkId);
 		model.setJcyq(jcyq);
 		model.setYwlb(ywlb);
 		model.setCd(cd);
@@ -107,6 +112,7 @@ public class ManageWorkServiceImpl implements ManageWorkService {
 					if (!reList.contains(checkId)) {
 						reList.add(checkId);
 						checkModel reModel = new checkModel();
+						reModel.setCk_bh(checkId);
 						reModel.setCd(model1.getCd());
 						reModel.setJcyq(model1.getJcyq());
 						reModel.setYwlb(model1.getYwlb());
@@ -143,6 +149,18 @@ public class ManageWorkServiceImpl implements ManageWorkService {
 			model.setZxr_name(xtglyhbDao.getUser(model.getZxr_yhbh()).getYhmc());
 		}
 		return modelList;
+	}
+
+	@Override
+	public boolean deleteCheck(int checkId) {
+		checkDao.deleteCheck(checkId);
+		List<Integer> yhList = checkDao.getYhByCheckId(checkId);
+		int hasFinishedJob = 0;
+		for(int yhbh : yhList){
+			checkDao.updateYhStatus(yhbh, hasFinishedJob);
+		}
+		checkDao.deleteCheckYh(checkId);
+		return false;
 	}
 
 }

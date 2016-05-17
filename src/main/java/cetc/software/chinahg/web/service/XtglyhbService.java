@@ -18,6 +18,10 @@ public interface XtglyhbService {
 
 	boolean updateUser(String yhbh, String yhdm, String yhxm, String yhkl,
 			String yhzw, String yh_jobNum, int yh_permission);
+	
+	boolean updateUser(int yhbh, String yhkl);
+	
+	boolean updateUserSelected(int yhbh, int selected);
 
 	boolean deleteXtglyhb(Integer yhbh);
 
